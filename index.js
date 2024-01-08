@@ -13,7 +13,11 @@ const exampleSongData = require("./data/songs");
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Sorted song titles.
  */
-function getSortedTitles(songs) {}
+function getSortedTitles(songs) {
+  return songs.map(x => x.title).sort()
+}
+
+console.log(getSortedTitles(exampleSongData))
 
 // #2
 /**
@@ -24,7 +28,7 @@ function getSortedTitles(songs) {}
  */
 function getSongsFromAlbum(songs, albumName) {}
 
-// #3 
+// #3
 /**
  * Categorizes and counts songs based on their runtime.
  * @param {Object[]} songs - An array of songs.
@@ -173,7 +177,7 @@ function findArtistWithMostSongs(songs) {}
 module.exports = {
   getSortedTitles,
   getSongsFromAlbum,
-  categorizeSongsByRuntime, 
+  categorizeSongsByRuntime,
   findAlbumWithMostSongs,
   getFirstSongInAlbum,
   isThereLongSong,
