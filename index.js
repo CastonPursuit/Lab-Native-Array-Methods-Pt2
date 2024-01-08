@@ -129,7 +129,13 @@ function isThereLongSong(songs, runtime) {
  * @returns {Object[]} Array of song objects with runtime in minutes.
  */
 function getSongsWithDurationInMinutes(songs) {
-  
+  let array = []
+  for(let i = 0; i < songs.length; i++) {
+    let obj = {};
+    obj[songs[i].title] = Math.round(songs[i].runtimeInSeconds / 60)
+    array.push(obj);
+  }
+  return array;
 }
 
 // #8
@@ -138,7 +144,15 @@ function getSongsWithDurationInMinutes(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
-function getAlbumsInReverseOrder(songs) {}
+function getAlbumsInReverseOrder(songs) {
+  return songs.map(song => song.album).sort((a, b) => {
+    if(a > b) {
+      return 1
+    }else {
+      return -1
+    }
+  })
+}
 
 // #9
 /**
