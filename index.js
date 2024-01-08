@@ -34,7 +34,6 @@ function getSongsFromAlbum(songs, albumName) {
   return newArr
 }
 
-console.log(getSongsFromAlbum(exampleSongData, "Bluewerks Vol. 1: Up Down Left Right"))
 
 // #3 
 /**
@@ -42,7 +41,31 @@ console.log(getSongsFromAlbum(exampleSongData, "Bluewerks Vol. 1: Up Down Left R
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
-function categorizeSongsByRuntime(songs) {}
+function categorizeSongsByRuntime(songs) {
+  let shortSongs = songs.reduce((total, song) => {
+    if(song.runtimeInSeconds < 180) {
+      total++
+    }
+    return total
+  }, 0)
+  let mediumSongs = songs.reduce((total, song) => {
+    if(song.runtimeInSeconds >= 180 && song.runtimeInSeconds <= 300) {
+      total++
+    }
+    return total
+  }, 0)
+  let longSongs = songs.reduce((total, song) => {
+    if(song.runtimeInSeconds > 300) {
+      total++
+    }
+    return total
+  }, 0)
+  return {
+    shortSongs: shortSongs,
+    mediumSongs: mediumSongs,
+    longSongs: longSongs
+  }
+}
 
 // #4
 /**
