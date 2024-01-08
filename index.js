@@ -44,7 +44,13 @@ function getSongsFromAlbum(songs, albumName) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
-function categorizeSongsByRuntime(songs) {}
+function categorizeSongsByRuntime(songs) {
+  let short = songs.filter(x => x.runtimeInSeconds < 180);
+  let medium = songs.filter(x => x.runtimeInSeconds >= 180 && x.runtimeInSeconds <= 300);
+  let long = songs.filter(x => x.runtimeInSeconds > 300);
+  return {longSongs: long.length, mediumSongs: medium.length, shortSongs: short.length};
+}
+
 
 // #4
 /**
