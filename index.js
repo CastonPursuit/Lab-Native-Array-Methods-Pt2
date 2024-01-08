@@ -1,5 +1,6 @@
 /*
 Native Array Methods pt.2 continues with the same dataset: songs. All required functions and array methods (forEach, map, find, some/every, sort) are combined into a single file, each addressing a distinct problem.
+git commit -m 'Completed problem # using Y method'
 */
 
 
@@ -13,7 +14,17 @@ const exampleSongData = require("./data/songs");
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Sorted song titles.
  */
-function getSortedTitles(songs) {}
+function getSortedTitles(songs) {
+  songs.sort((a,b) => {
+    let songTitleA = a.title.toUpperCase();
+    let songTitleB = b.title.toUpperCase();
+    if (songTitleA > songTitleB)
+      return 1;
+    if (songTitleA < songTitleB)
+      return -1;
+  });
+  return songs.map(x => x.title)
+}
 
 // #2
 /**
