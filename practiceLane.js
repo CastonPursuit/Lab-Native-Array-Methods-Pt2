@@ -1,29 +1,30 @@
 const exampleSongData = require("./data/songs");
 
-function categorizeSongsByRuntime(songs) {
-    let shortSongs = songs.reduce((total, song) => {
-      if(song.runtimeInSeconds < 180) {
-        total++
-      }
-      return total
-    }, 0)
-    let mediumSongs = songs.reduce((total, song) => {
-      if(song.runtimeInSeconds >= 180 && song.runtimeInSeconds <= 300) {
-        total++
-      }
-      return total
-    }, 0)
-    let longSongs = songs.reduce((total, song) => {
-      if(song.runtimeInSeconds > 300) {
-        total++
-      }
-      return total
-    }, 0)
-    return {
-      shortSongs: shortSongs,
-      mediumSongs: mediumSongs,
-      longSongs: longSongs
+function findAlbumWithMostSongs(songs) {
+    let albums = songs.map(song => song.album)
+    let obj = {}
+    let mostSongsValue = 0
+    let album;
+    for(let i = 0; i < songs.length; i++) {
+        if(obj.hasOwnProperty(songs[i].album)){
+            continue;
+        }
+        obj[songs[i].album] = 0
     }
+    for(let j = 0; j < albums.length; j++) {
+        for(let key in obj) {
+            if(albums[j] === key){
+                obj[key]++
+            }
+        }
+    }
+    for(let key in obj) {
+        if(obj[key] > mostSongsValue) {
+            mostSongsValue = obj[key]
+            album = key
+        }
+    }
+    return album
   }
 
-  console.log(categorizeSongsByRuntime(exampleSongData))
+  console.log(findAlbumWithMostSongs(exampleSongData))
