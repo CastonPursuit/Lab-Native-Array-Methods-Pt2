@@ -119,7 +119,7 @@ function getFirstSongInAlbum(songs, albumName) {
  * @returns {boolean} True if there is at least one song longer than the runtime.
  */
 function isThereLongSong(songs, runtime) {
-  
+  return songs.some(song => song.runtimeInSeconds > runtime)
 }
 
 // #7
@@ -128,7 +128,9 @@ function isThereLongSong(songs, runtime) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Array of song objects with runtime in minutes.
  */
-function getSongsWithDurationInMinutes(songs) {}
+function getSongsWithDurationInMinutes(songs) {
+  
+}
 
 // #8
 /**
