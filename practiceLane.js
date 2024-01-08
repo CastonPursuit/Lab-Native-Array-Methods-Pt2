@@ -1,13 +1,7 @@
 const exampleSongData = require("./data/songs");
 
-function getAlbumsInReverseOrder(songs) {
-    return songs.map(song => song.album).sort((a, b) => {
-      if(a > b) {
-        return -1
-      }else {
-        return 1
-      }
-    } )
+function songsWithWord(songs, word) {
+    return songs.filter(song => song.title.includes(word))
   }
 
-console.log(getAlbumsInReverseOrder(exampleSongData))
+console.log(songsWithWord(exampleSongData, "Berlin"))
