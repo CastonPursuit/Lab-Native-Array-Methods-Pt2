@@ -23,6 +23,7 @@ function getSortedTitles(songs) {
     if (songTitleA < songTitleB)
       return -1;
   });
+
   return songs.map(x => x.title)
 }
 
@@ -33,7 +34,9 @@ function getSortedTitles(songs) {
  * @param {string} albumName - Name of the album.
  * @returns {string[]} An array of song titles.
  */
-function getSongsFromAlbum(songs, albumName) {}
+function getSongsFromAlbum(songs, albumName) {
+  return songs.filter((x) => x.album == albumName).map(x => x.title);
+}
 
 // #3 
 /**
