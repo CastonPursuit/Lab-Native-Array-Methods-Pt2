@@ -25,12 +25,16 @@ function getSortedTitles(songs) {
  * @returns {string[]} An array of song titles.
  */
 function getSongsFromAlbum(songs, albumName) {
-  return songs.filter(x => {
-    return x.album === albumName ? x.title :  
-  })
+  let newArr = [];
+  for(let i = 0; i < songs.length; i++){
+    if(songs[i].album === albumName){
+      newArr.push(songs[i].title)
+    }
+  }
+  return newArr
 }
 
-console.log(getSongsFromAlbum(exampleSongData))
+console.log(getSongsFromAlbum(exampleSongData, "Bluewerks Vol. 1: Up Down Left Right"))
 
 // #3 
 /**
