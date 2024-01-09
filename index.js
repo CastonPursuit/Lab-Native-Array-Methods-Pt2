@@ -60,6 +60,7 @@ function categorizeSongsByRuntime(songs) {
  */
 function findAlbumWithMostSongs(songs) {
   let newSongs = {};
+
   songs.forEach(x => {
     if (!newSongs[x.album]){
       newSongs[x.album] = {
@@ -68,7 +69,7 @@ function findAlbumWithMostSongs(songs) {
       };
     }
     else
-    newSongs[x.album].songCount++;
+      newSongs[x.album].songCount++;
   });
 
   let longestAlbum = {title: "album", songCount: 0};
@@ -88,7 +89,10 @@ function findAlbumWithMostSongs(songs) {
  * @param {string} albumName - Name of the album.
  * @returns {Object|null} First song object in the album or null.
  */
-function getFirstSongInAlbum(songs, albumName) {}
+function getFirstSongInAlbum(songs, albumName) {
+  albumArray = songs.map(x => x.album);
+  return songs[albumArray.indexOf(albumName)];
+}
 
 // #6
 /**
