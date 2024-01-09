@@ -1,14 +1,21 @@
 const { get } = require("http");
 const exampleSongData = require("./data/songs");
 
-function listAlbumTotalRuntimes(songs) {
-    const albumObj = {}
-    for(let i = 0; i < songs.length; i++) {
-      if(albumObj.hasOwnProperty(songs[i].album)){
-        albumObj[songs[i].album] += songs[i].runtimeInSeconds
+function mapArtistsToSongs(songs) {
+    const artists = songs.map(song => song.artist)
+    const mappedObject = {};
+    for(const artist of artists) {
+        const arr = []
+        for(const song of songs) {
+            if(artist === song.artist) {
+                arr.push(song.title)
+            }
+        }
+        if(mappedObject.hasOwnProperty(artist)){
+            continue;
+        }
+        mappedObject[artist] = arr
     }
-    albumObj[songs[i].album] = songs[i].runtimeInSeconds
-    }
-    return albumObj
+    return mappedObject
 }
-// console.log(listAlbumTotalRuntimes(exampleSongData))
+console.log(mapArtistsToSongs(exampleSongData))

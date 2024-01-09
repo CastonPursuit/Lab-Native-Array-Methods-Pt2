@@ -281,9 +281,25 @@ function findFirstSongStartingWith(songs, letter) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
-function mapArtistsToSongs(songs) {
 
+function mapArtistsToSongs(songs) {
+  const artists = songs.map(song => song.artist)
+  const mappedObject = {};
+  for(const artist of artists) {
+    const arr = []
+    for(const song of songs) {
+      if(artist === song.artist) {
+        arr.push(song.title)
+      }
+    }
+    if(mappedObject.hasOwnProperty(artist)){
+      continue;
+    }
+    mappedObject[artist] = arr
+  }
+  return mappedObject
 }
+
 
 // Problem #17
 /**
