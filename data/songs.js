@@ -137,6 +137,12 @@ const songs = [
     album: "Seasonal Sounds",
     artist: "Melody Green",
     runtimeInSeconds: 152,
+  },
+  {
+    title: "Nightfall Serenade Berline",
+    album: "Seasonal Sounds",
+    artist: "Melody Green",
+    runtimeInSeconds: 152,
   }
 ];
 

@@ -162,7 +162,7 @@ function getAlbumsInReverseOrder(songs) {
  * @returns {string[]} An array of song titles containing the word.
  */
 function songsWithWord(songs, word) {
-  return songs.filter(song => song[title].includes(word))
+  return songs.filter(song => song.title.includes(word))
 }
 
 // #10
@@ -172,21 +172,51 @@ function songsWithWord(songs, word) {
  * @param {string} artistName - Name of the artist.
  * @returns {number} Total runtime in seconds.
  */
-function getTotalRuntimeOfArtist(songs, artistName) {}
+function getTotalRuntimeOfArtist(songs, artistName) {
+  return songs.reduce((total, song) => {
+    if(song.artist == artistName){
+      total += song.runtimeInSeconds
+    }
+    return total
+  },0)
+}
 
 // Problem #11
 /**
  * Prints artists who have more than one song in the list.
  * @param {Object[]} songs - An array of songs.
  */
-function printArtistsWithMultipleSongs(songs) {}
+function printArtistsWithMultipleSongs(songs) {
+  let artist = songs.map(song => song.artist)
+  let obj = {}
+  for(let i = 0; i < songs.length; i++) {
+      if(obj.hasOwnProperty(songs[i].artist)){
+          continue;
+      }
+      obj[songs[i].artist] = 0
+  }
+  for(let j = 0; j < artist.length; j++) {
+      for(let key in obj) {
+          if(artist[j] === key){
+              obj[key]++
+          }
+      }
+  }
+  for(let key in obj) {
+      if(obj[key] > 1 ) {
+          console.log(key)
+      }
+  }
+}
 
 // Problem #12
 /**
  * Logs the longest song title.
  * @param {Object[]} songs - An array of songs.
  */
-function printLongestSongTitle(songs) {}
+function printLongestSongTitle(songs) {
+  
+}
 
 // Problem #13
 /**
