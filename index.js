@@ -111,7 +111,10 @@ function isThereLongSong(songs, runtime) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Array of song objects with runtime in minutes.
  */
-function getSongsWithDurationInMinutes(songs) {}
+function getSongsWithDurationInMinutes(songs) {
+  songs.forEach(x => x.durationInMinutes = x.runtimeInSeconds/60);
+  return songs
+}
 
 // #8
 /**
