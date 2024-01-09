@@ -122,7 +122,23 @@ function getSongsWithDurationInMinutes(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
-function getAlbumsInReverseOrder(songs) {}
+function getAlbumsInReverseOrder(songs) {
+  albumArray = [];
+
+  songs.forEach(x => {
+    if (!albumArray.includes(x.album))
+      albumArray.push(x.album);
+  });
+
+  albumArray.sort((album1, album2) => {
+    album1 = album1.toUpperCase();
+    album2 = album2.toUpperCase();
+    if (album1 > album2) return -1;
+    if (album2 < album2) return 1;
+  });
+
+  return albumArray;
+}
 
 // #9
 /**
