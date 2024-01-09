@@ -147,7 +147,10 @@ function getAlbumsInReverseOrder(songs) {
  * @param {string} word - The word to search for in song titles.
  * @returns {string[]} An array of song titles containing the word.
  */
-function songsWithWord(songs, word) {}
+function songsWithWord(songs, word) {
+  matchingSongObjs = songs.filter(x => x.title.toUpperCase().includes(word.toUpperCase()));
+  return matchingSongObjs.map(x => x.title);
+}
 
 // #10
 /**
