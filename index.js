@@ -159,7 +159,10 @@ function songsWithWord(songs, word) {
  * @param {string} artistName - Name of the artist.
  * @returns {number} Total runtime in seconds.
  */
-function getTotalRuntimeOfArtist(songs, artistName) {}
+function getTotalRuntimeOfArtist(songs, artistName) {
+  matchingSongObj = songs.filter(x => x.artist == artistName);
+  return matchingSongObj.reduce((accumulator, x) => accumulator + x.runtimeInSeconds, 0);
+}
 
 // Problem #11
 /**
