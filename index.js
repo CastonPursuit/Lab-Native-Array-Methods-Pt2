@@ -129,13 +129,10 @@ function isThereLongSong(songs, runtime) {
  * @returns {Object[]} Array of song objects with runtime in minutes.
  */
 function getSongsWithDurationInMinutes(songs) {
-  let array = []
   for(let i = 0; i < songs.length; i++) {
-    let obj = {};
-    obj[songs[i].title] = Math.round(songs[i].runtimeInSeconds / 60)
-    array.push(obj);
+    songs[i].durationInMinutes = songs[i].runtimeInSeconds / 60
   }
-  return array;
+  return songs;
 }
 
 // #8
@@ -145,13 +142,19 @@ function getSongsWithDurationInMinutes(songs) {
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
 function getAlbumsInReverseOrder(songs) {
-  return songs.map(song => song.album).sort((a, b) => {
+  let array =  songs.map(song => song.album).sort((a, b) => {
     if(a > b) {
-      return 1
-    }else {
       return -1
+    }else {
+      return 1
     }
   })
+  for(let i = 0; i < array.length; i++) {
+    if(array[i] === array[i + 1] || array[i] === array[i - 1]){
+      array.splice(i,1)
+    }
+  }
+  return array
 }
 
 // #9
@@ -162,8 +165,14 @@ function getAlbumsInReverseOrder(songs) {
  * @returns {string[]} An array of song titles containing the word.
  */
 function songsWithWord(songs, word) {
-  return songs.filter(song => song.title.includes(word))
+  let array = []
+  let newArr = songs.filter(song => song.title.includes(word))
+  for(const obj of newArr){
+      array.push(obj.title)
+  }
+  return array
 }
+
 
 // #10
 /**
@@ -215,7 +224,13 @@ function printArtistsWithMultipleSongs(songs) {
  * @param {Object[]} songs - An array of songs.
  */
 function printLongestSongTitle(songs) {
-  
+  let longestSong = songs.reduce((longest, song) => {
+    if(longest.length < song.title.length) {
+      longest = song.title
+    }
+    return longest
+  },"")
+  console.log(longestSong) 
 }
 
 // Problem #13
@@ -224,7 +239,10 @@ function printLongestSongTitle(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Sorted array of songs.
  */
-function sortSongsByArtistAndTitle(songs) {}
+function sortSongsByArtistAndTitle(songs) {
+  let sortArtist = songs.sort((a, b) => a.artist.localeCompare(b.artist))
+  return sortArtist.sort((a, b) => a.title.localeCompare(b.title))
+}
 
 // Problem #14
 /**
