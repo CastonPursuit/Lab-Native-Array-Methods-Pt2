@@ -79,17 +79,17 @@ function findAlbumWithMostSongs(songs) {
   let mostSongsValue = 0
   let album;
   for(let i = 0; i < songs.length; i++) {
-      if(obj.hasOwnProperty(songs[i].album)){
-          continue;
-      }
-      obj[songs[i].album] = 0
+    if(obj.hasOwnProperty(songs[i].album)){
+      continue;
+    }
+    obj[songs[i].album] = 0
   }
   for(let j = 0; j < albums.length; j++) {
-      for(let key in obj) {
-          if(albums[j] === key){
-              obj[key]++
-          }
+    for(let key in obj) {
+      if(albums[j] === key){
+        obj[key]++
       }
+    }
   }
   for(let key in obj) {
       if(obj[key] > mostSongsValue) {
@@ -168,7 +168,7 @@ function songsWithWord(songs, word) {
   let array = []
   let newArr = songs.filter(song => song.title.includes(word))
   for(const obj of newArr){
-      array.push(obj.title)
+    array.push(obj.title)
   }
   return array
 }
@@ -199,22 +199,22 @@ function printArtistsWithMultipleSongs(songs) {
   let artist = songs.map(song => song.artist)
   let obj = {}
   for(let i = 0; i < songs.length; i++) {
-      if(obj.hasOwnProperty(songs[i].artist)){
-          continue;
-      }
-      obj[songs[i].artist] = 0
+    if(obj.hasOwnProperty(songs[i].artist)){
+      continue;
+    }
+    obj[songs[i].artist] = 0
   }
   for(let j = 0; j < artist.length; j++) {
-      for(let key in obj) {
-          if(artist[j] === key){
-              obj[key]++
-          }
+    for(let key in obj) {
+      if(artist[j] === key){
+        obj[key]++
       }
+    }
   }
   for(let key in obj) {
-      if(obj[key] > 1 ) {
-          console.log(key)
-      }
+    if(obj[key] > 1 ) {
+      console.log(key)
+    }
   }
 }
 
@@ -240,11 +240,12 @@ function printLongestSongTitle(songs) {
  * @returns {Object[]} Sorted array of songs.
  */
 function sortSongsByArtistAndTitle(songs) {
-  const sorted = songs.slice().sort((a, b) => {
+  return songs.sort((a, b) => {
     return a.artist.localeCompare(b.artist) || a.title.localeCompare(b.title);
   })
-  return sorted
 }
+
+
 
 // Problem #14
 /**
@@ -253,7 +254,14 @@ function sortSongsByArtistAndTitle(songs) {
  * @returns {Object} An object mapping each album to its total runtime.
  */
 function listAlbumTotalRuntimes(songs) {
-
+  return songs.reduce((obj, song) => {
+    if(obj.hasOwnProperty(song.album)) {
+      obj[song.album] += song.runtimeInSeconds
+    }else {
+      obj[song.album] = song.runtimeInSeconds
+    } 
+    return obj;
+  },{})
 }
 
 // Problem #15
@@ -263,7 +271,9 @@ function listAlbumTotalRuntimes(songs) {
  * @param {string} letter - The letter to search for.
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
-function findFirstSongStartingWith(songs, letter) {}
+function findFirstSongStartingWith(songs, letter) {
+  return songs.find(song => song.title.charAt(0) === letter ? song : null)
+}
 
 // Problem #16
 /**
@@ -271,7 +281,9 @@ function findFirstSongStartingWith(songs, letter) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
-function mapArtistsToSongs(songs) {}
+function mapArtistsToSongs(songs) {
+
+}
 
 // Problem #17
 /**
