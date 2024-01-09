@@ -74,16 +74,19 @@ function categorizeSongsByRuntime(songs) {
  * @returns {string} The name of the album with the most songs.
  */
 function findAlbumWithMostSongs(songs) {
+  // ! I wanted to create an object with the key being the album name and the values being the amount of songs on the album
   let albums = songs.map(song => song.album)
   let obj = {}
   let mostSongsValue = 0
   let album;
+  // ! This loop is creating key(album) value(0) pairs in the obj variable. if the key is already created it continues in the loop so there is no duplicates
   for(let i = 0; i < songs.length; i++) {
     if(obj.hasOwnProperty(songs[i].album)){
       continue;
     }
     obj[songs[i].album] = 0
   }
+  // ! These loops is counting the songs with the same album name to give values in the obj variable
   for(let j = 0; j < albums.length; j++) {
     for(let key in obj) {
       if(albums[j] === key){
@@ -91,11 +94,12 @@ function findAlbumWithMostSongs(songs) {
       }
     }
   }
+  // ! this loop is assigning the album with the most songs to return the album with the most songs
   for(let key in obj) {
-      if(obj[key] > mostSongsValue) {
-          mostSongsValue = obj[key]
-          album = key
-      }
+    if(obj[key] > mostSongsValue) {
+      mostSongsValue = obj[key]
+      album = key
+    }
   }
   return album
 }
@@ -142,6 +146,7 @@ function getSongsWithDurationInMinutes(songs) {
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
 function getAlbumsInReverseOrder(songs) {
+  // ! This mpas the albums in to its own array then its sorts the album names in reverse order 
   let array =  songs.map(song => song.album).sort((a, b) => {
     if(a > b) {
       return -1
@@ -149,6 +154,7 @@ function getAlbumsInReverseOrder(songs) {
       return 1
     }
   })
+  //  ! This removes the duplicate album names
   for(let i = 0; i < array.length; i++) {
     if(array[i] === array[i + 1] || array[i] === array[i - 1]){
       array.splice(i,1)
@@ -283,15 +289,23 @@ function findFirstSongStartingWith(songs, letter) {
  */
 
 function mapArtistsToSongs(songs) {
+  // ! With this I wanted to create an object with the key being the artist and the value being and array of the artist songs
+  // ! Map out an array of the artist
   const artists = songs.map(song => song.artist)
+  // ! create an object to return 
   const mappedObject = {};
+  // ! Loop through the artist array
   for(const artist of artists) {
+  // ! create an array for every artist
     const arr = []
+  // ! Now loop through the songs array
     for(const song of songs) {
+  // ! if the artist we are currently on in the artist loop equals the current song object artist push the current song object title in the arr 
       if(artist === song.artist) {
         arr.push(song.title)
       }
     }
+  // ! after that loop the array will have the artist songs in from the songs loop and assigin the key and value pairs
     if(mappedObject.hasOwnProperty(artist)){
       continue;
     }
@@ -307,7 +321,40 @@ function mapArtistsToSongs(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the longest average song runtime.
  */
-function findAlbumWithLongestAverageRuntime(songs) {}
+function findAlbumWithLongestAverageRuntime(songs) {
+  const albums = songs.map(song => song.album)
+  const mappedObject = {};
+  const average = 0
+  const songAmount = 0
+  const longest = 0
+  const albumName = ""
+  for(const album of albums) {
+    const arr = []
+    for(const song of songs) {
+      if(album === song.album) {
+        arr.push(song.runtimeInSeconds)
+      }
+    }
+    if(mappedObject.hasOwnProperty(album)){
+      continue;
+    }
+    mappedObject[album] = arr
+  }
+  for(const album in mappedObject){
+    for(const time of mappedObject[album]) {
+      average += time
+      songAmount++ 
+    }
+    mappedObject[album] = Math.round(average / songAmount)
+  }
+  for(const album in mappedObject){
+    if(mappedObject[album] > longest){
+      longest = mappedObject[album]
+      albumName = album
+    }
+  }
+  return albumName
+}
 
 // Problem #18
 /**
