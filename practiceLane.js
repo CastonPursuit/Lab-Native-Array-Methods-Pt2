@@ -1,15 +1,10 @@
 const { get } = require("http");
 const exampleSongData = require("./data/songs");
 
-function printLongestSongTitle(songs) {
-    let longestSong = songs.reduce((longest, song) => {
-      if(longest.length < song.title.length) {
-        longest = song.title
-      }
-      return longest
-    },"")
-    return longestSong
+function sortSongsByArtistAndTitle(songs) {
+    let sortArtist = songs.sort((a, b) => a.artist.localeCompare(b.artist))
+    return sortArtist.sort((a, b) => a.title.localeCompare(b.title))
   }
 
-console.log(printLongestSongTitle(exampleSongData))
+console.log(sortSongsByArtistAndTitle(exampleSongData))
 
