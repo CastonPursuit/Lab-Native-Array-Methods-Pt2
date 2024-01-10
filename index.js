@@ -399,14 +399,37 @@ function printAlbumSummaries(songs) {
     console.log(`${album}: ${songtotal} songs, Total Runtime: ${totalRuntime} seconds`)
   }
 }
-
 // Problem #20
 /**
  * Finds the artist with the most songs in the list.
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the artist with the most songs.
  */
-function findArtistWithMostSongs(songs) {}
+function findArtistWithMostSongs(songs) {
+  const artists = songs.map(song => song.artist)
+  let artistWithSongsObject = {};
+  for(const artist of artists) {
+    let totalSongs = 0
+    for(const song of songs) {
+      if(artist === song.artist) {
+        totalSongs++
+      }
+    }
+    if(artistWithSongsObject.hasOwnProperty(artist)){
+      continue;
+    }
+    artistWithSongsObject[artist] = totalSongs
+  }
+  let mostArtist;
+  let highestValue = 0
+  for(const key in artistWithSongsObject){
+    if(artistWithSongsObject[key] > highestValue){
+      mostArtist = key
+      highestValue = artistWithSongsObject[key]
+    }
+  }
+  return mostArtist
+}
 
 
 module.exports = {
@@ -430,4 +453,4 @@ module.exports = {
   printSongsSortedByRuntime,
   printAlbumSummaries,
   findArtistWithMostSongs
-};
+};;
