@@ -208,7 +208,30 @@ function printLongestSongTitle(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Sorted array of songs.
  */
-function sortSongsByArtistAndTitle(songs) {}
+function sortSongsByArtistAndTitle(songs) {
+
+  // sort array by artist
+  songs.sort((song1, song2) => {
+    artist1 = song1.artist.toUpperCase();
+    artist2 = song2.artist.toUpperCase();
+    if (artist1 < artist2)
+      return -1;
+    if (artist1 < artist2)
+      return 1;
+  });
+
+  // sort songs by title if adjacent artist is the same
+  songs.sort((song1, song2) => {
+    if (song1.artist == song2.artist){
+      song1 = song1.title.toUpperCase();
+      song2 = song2.title.toUpperCase();
+      if (song1 < song2) return -1;
+      if (song1 > song2) return 1;
+    }
+  });
+
+  return songs;
+}
 
 // Problem #14
 /**
