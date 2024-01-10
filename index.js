@@ -36,7 +36,19 @@ function getSongsFromAlbum(songs, albumName) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
+
+// Expected: {"longSongs": 0, "mediumSongs": 12, "shortSongs": 11}
+
 function categorizeSongsByRuntime(songs) {
+  const longSongs = songs.filter(x => x.runtimeInSeconds > 220).length;
+  const mediumSongs = songs.filter(x => x.runtimeInSeconds >= 180).length;
+  const shortSongs = songs.filter(x => x.runtimeInSeconds < 180).length;
+
+  return {
+    longSongs: longSongs,
+    mediumSongs: mediumSongs,
+    shortSongs : shortSongs
+  }
 }
 
 // #4
@@ -45,7 +57,9 @@ function categorizeSongsByRuntime(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the most songs.
  */
-function findAlbumWithMostSongs(songs) {}
+function findAlbumWithMostSongs(songs) {
+  return songs.filter(x => x.album)
+}
 
 // #5
 /**
