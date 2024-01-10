@@ -85,7 +85,9 @@ function getFirstSongInAlbum(songs, albumName) {
  * @param {number} runtime - The runtime to check against in seconds.
  * @returns {boolean} True if there is at least one song longer than the runtime.
  */
-function isThereLongSong(songs, runtime) {}
+function isThereLongSong(songs, runtime) {
+  return songs.some(x => x.runtimeInSeconds > runtime);
+}
 
 // #7
 /**
