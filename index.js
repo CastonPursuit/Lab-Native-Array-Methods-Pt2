@@ -281,6 +281,7 @@ function findFirstSongStartingWith(songs, letter) {
   return songs.find(song => song.title.charAt(0) === letter ? song : null)
 }
 
+
 // Problem #16
 /**
  * Maps each artist to an array of their song titles.
@@ -323,11 +324,9 @@ function mapArtistsToSongs(songs) {
  */
 function findAlbumWithLongestAverageRuntime(songs) {
   const albums = songs.map(song => song.album)
-  const mappedObject = {};
-  const average = 0
-  const songAmount = 0
-  const longest = 0
-  const albumName = ""
+  let mappedObject = {};
+  let longest = 0
+  let albumName = ""
   for(const album of albums) {
     const arr = []
     for(const song of songs) {
@@ -341,11 +340,13 @@ function findAlbumWithLongestAverageRuntime(songs) {
     mappedObject[album] = arr
   }
   for(const album in mappedObject){
+    let total = 0
+    let songAmount = 0
     for(const time of mappedObject[album]) {
-      average += time
+      total += time
       songAmount++ 
     }
-    mappedObject[album] = Math.round(average / songAmount)
+    mappedObject[album] = Math.round(total / songAmount)
   }
   for(const album in mappedObject){
     if(mappedObject[album] > longest){
@@ -361,14 +362,43 @@ function findAlbumWithLongestAverageRuntime(songs) {
  * Logs song titles sorted by their runtime.
  * @param {Object[]} songs - An array of songs.
  */
-function printSongsSortedByRuntime(songs) {}
+function printSongsSortedByRuntime(songs) {
+  let sortedRunitimes = songs.sort((a, b) => a.runtimeInSeconds - b.runtimeInSeconds)
+  for(const song of sortedRunitimes) {
+    console.log(song.title)
+  }
+}
 
 // Problem #19
 /**
  * Prints a summary of each album, including its name, total runtime, and number of songs.
  * @param {Object[]} songs - An array of songs.
  */
-function printAlbumSummaries(songs) {}
+function printAlbumSummaries(songs) {
+  const albums = songs.map(song => song.album)
+  let albumWithRuntimeObject = {};
+  for(const album of albums) {
+    const arr = []
+    for(const song of songs) {
+      if(album === song.album) {
+        arr.push(song.runtimeInSeconds)
+      }
+    }
+    if(albumWithRuntimeObject.hasOwnProperty(album)){
+      continue;
+    }
+    albumWithRuntimeObject[album] = arr
+  }
+  for(const album in albumWithRuntimeObject){
+    let songtotal = 0
+    let totalRuntime = 0
+    for(const time of albumWithRuntimeObject[album]) {
+      totalRuntime += time
+      songtotal++
+    }
+    console.log(`${album}: ${songtotal} songs, Total Runtime: ${totalRuntime} seconds`)
+  }
+}
 
 // Problem #20
 /**
@@ -400,4 +430,4 @@ module.exports = {
   printSongsSortedByRuntime,
   printAlbumSummaries,
   findArtistWithMostSongs
-};;
+};
