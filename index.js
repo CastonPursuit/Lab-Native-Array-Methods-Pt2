@@ -408,6 +408,8 @@ function printAlbumSummaries(songs) {
 function findArtistWithMostSongs(songs) {
   const artists = songs.map(song => song.artist)
   let artistWithSongsObject = {};
+  let artistWithMost;
+  let highestValue = 0
   for(const artist of artists) {
     let totalSongs = 0
     for(const song of songs) {
@@ -420,15 +422,13 @@ function findArtistWithMostSongs(songs) {
     }
     artistWithSongsObject[artist] = totalSongs
   }
-  let mostArtist;
-  let highestValue = 0
   for(const key in artistWithSongsObject){
     if(artistWithSongsObject[key] > highestValue){
-      mostArtist = key
+      artistWithMost = key
       highestValue = artistWithSongsObject[key]
     }
   }
-  return mostArtist
+  return artistWithMost
 }
 
 
