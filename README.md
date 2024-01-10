@@ -75,3 +75,4 @@
 - If you find yourself stuck on a problem, don't hesitate to review the [MDN Web Docs on Array methods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 - Collaboration is key to learning. Feel free to discuss approaches with your peers or reach out to a coach for guidance.
 
+# Lab-Native-Array-Methods-Pt2
