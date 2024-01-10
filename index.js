@@ -26,7 +26,9 @@ console.log(getSortedTitles(exampleSongData))
  * @param {string} albumName - Name of the album.
  * @returns {string[]} An array of song titles.
  */
-function getSongsFromAlbum(songs, albumName) {}
+function getSongsFromAlbum(songs, albumName) {
+  return songs.filter(x => x.album === albumName).map(x => x.title)
+}
 
 // #3
 /**
@@ -34,7 +36,8 @@ function getSongsFromAlbum(songs, albumName) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
-function categorizeSongsByRuntime(songs) {}
+function categorizeSongsByRuntime(songs) {
+}
 
 // #4
 /**
