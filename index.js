@@ -216,7 +216,10 @@ function printLongestSongTitle(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Sorted array of songs.
  */
-function sortSongsByArtistAndTitle(songs) {}
+function sortSongsByArtistAndTitle(songs) {
+  return songs.sort((a, b) => a.artist.localeCompare(b.artist) || a.title.localeCompare(b.title));
+}
+// console.log(sortSongsByArtistAndTitle(exampleSongData))
 
 // Problem #14
 /**
