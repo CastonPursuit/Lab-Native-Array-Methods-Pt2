@@ -68,9 +68,20 @@ console.log(categorizeSongsByRuntime(exampleSongData))
  * @returns {string} The name of the album with the most songs.
  */
 function findAlbumWithMostSongs(songs) {
-  let getAlbum = songs.reduce((albumName, song) => albumName.title > albumName.album ? albumName : song);
-  return getAlbum.album;
-};
+  let highestSongCount = 0;
+  let albumWithMostSongs;
+
+  songs.reduce((songCountObj, currValue) => {
+  songCountObj[currValue.album] = (songCountObj[currValue.album] || 0) + 1;
+  if(songCountObj[currValue.album] > highestSongCount){
+    highestSongCount = songCountObj[currValue.album];
+    albumWithMostSongs = currValue.album
+  }
+  return songCountObj;
+}, {});
+
+return albumWithMostSongs;
+}
 
 console.log(findAlbumWithMostSongs(exampleSongData))
 
@@ -81,7 +92,16 @@ console.log(findAlbumWithMostSongs(exampleSongData))
  * @param {string} albumName - Name of the album.
  * @returns {Object|null} First song object in the album or null.
  */
-function getFirstSongInAlbum(songs, albumName) {}
+function getFirstSongInAlbum(songs, albumName) {
+ let getAlbumDetails = songs.find((x) => {
+  return {} === albumName
+ })
+ return getAlbumDetails;
+
+}
+
+
+
 
 // #6
 /**
@@ -90,7 +110,9 @@ function getFirstSongInAlbum(songs, albumName) {}
  * @param {number} runtime - The runtime to check against in seconds.
  * @returns {boolean} True if there is at least one song longer than the runtime.
  */
-function isThereLongSong(songs, runtime) {}
+function isThereLongSong(songs, runtime) {
+  Array.prototype.every.call(songs, (x) => typeof x.runtime < 400)
+}
 
 // #7
 /**
@@ -154,10 +176,24 @@ function sortSongsByArtistAndTitle(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each album to its total runtime.
  */
-function listAlbumTotalRuntimes(songs) {}
+function listAlbumTotalRuntimes(songs) {
+  let albumTotalRuntimes = {};
+
+  songs.forEach(song => {
+    if(albumTotalRuntimes[song.album]){
+      albumTotalRuntimes[song.album] += song.runtimeInSeconds;
+    }else {
+      albumTotalRuntimes[song.album] = song.runtimeInSeconds
+    }
+  })
+
+  return albumTotalRuntimes;
+}
+
+console.log(listAlbumTotalRuntimes(exampleSongData))
 
 // Problem #15
-/**
+/** 
  * Finds the first song with a title starting with a specific letter.
  * @param {Object[]} songs - An array of songs.
  * @param {string} letter - The letter to search for.
