@@ -156,7 +156,15 @@ function getTotalRuntimeOfArtist(songs, artistName) {
  * @param {Object[]} songs - An array of songs.
  */
 function printArtistsWithMultipleSongs(songs) {
-
+  // let artistWithTheMostSongs = {};
+  // return songs.forEach(song => {
+  //   if (artistWithTheMostSongs[song.artist]) {
+  //     artistWithTheMostSongs[song.artist]
+  //   } else {
+  //     artistWithTheMostSongs[song.artist] += artistWithTheMostSongs[song.artist]
+  //   }
+  // })
+  // console.log(artistWithTheMostSongs);
 }
 
 // Problem #12
@@ -164,7 +172,12 @@ function printArtistsWithMultipleSongs(songs) {
  * Logs the longest song title.
  * @param {Object[]} songs - An array of songs.
  */
-function printLongestSongTitle(songs) {}
+function printLongestSongTitle(songs) {
+  let longestSongTitle = songs.sort((a, b) => b.title.length - a.title.length)[0].title;
+  return longestSongTitle;
+}
+
+console.log(printLongestSongTitle(exampleSongData))
 
 // Problem #13
 /**
@@ -172,7 +185,9 @@ function printLongestSongTitle(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Sorted array of songs.
  */
-function sortSongsByArtistAndTitle(songs) {}
+function sortSongsByArtistAndTitle(songs) {
+  return songs.sort((a, b) => a.artist.localeCompare(b.artist) || a.title.localeCompare(b.title));
+}
 
 // Problem #14
 /**
@@ -180,7 +195,24 @@ function sortSongsByArtistAndTitle(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each album to its total runtime.
  */
-function listAlbumTotalRuntimes(songs) {}
+// function listAlbumTotalRuntimes(songs) {
+//   return songs.map(x => {
+//     let album = songs.map(x => x.album);
+//     let total = songs.reduce((total, x) => total + x.runtimeInSeconds, 0)
+//     return {
+//       album: total
+//     }
+//   })
+// }
+
+function listAlbumTotalRuntimes(songs) {
+  // let albumTotalRuntimes = {};
+  // songs.forEach(x => {
+  //   if ()
+  // })
+  // return albumTotalRuntimes;
+}
+
 
 // Problem #15
 /**
@@ -189,7 +221,9 @@ function listAlbumTotalRuntimes(songs) {}
  * @param {string} letter - The letter to search for.
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
-function findFirstSongStartingWith(songs, letter) {}
+function findFirstSongStartingWith(songs, letter) {
+  return songs.find(x => x.title.startsWith(letter));
+}
 
 // Problem #16
 /**
