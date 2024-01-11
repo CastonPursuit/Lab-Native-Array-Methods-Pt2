@@ -59,7 +59,19 @@ function categorizeSongsByRuntime(songs) {
  */
 
 function findAlbumWithMostSongs(songs) {
+  let highestSongCount = 0;
+  let albumWithMostSongs;
 
+  songs.reduce((songCountObj, currValue) => {
+    songCountObj[currValue.album] = (songCountObj[currValue.album] || 0) + 1;
+    if (songCountObj[currValue.album] > highestSongCount) {
+      highestSongCount = songCountObj[currValue.album];
+      albumWithMostSongs = currValue.album;
+    }
+    return songCountObj;
+  }, {});
+
+  return albumWithMostSongs;
 }
 
 // Example usage
@@ -95,7 +107,16 @@ function isThereLongSong(songs, runtime) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Array of song objects with runtime in minutes.
  */
-function getSongsWithDurationInMinutes(songs) {}
+function getSongsWithDurationInMinutes(songs) {
+  return songs.map(x => {
+    return {
+      title: x.title,
+      durationInMinutes: (x.runtimeInSeconds / 60)
+    }
+  })
+}
+
+// console.log(getSongsWithDurationInMinutes(exampleSongData))
 
 // #8
 /**
@@ -103,7 +124,9 @@ function getSongsWithDurationInMinutes(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
-function getAlbumsInReverseOrder(songs) {}
+function getAlbumsInReverseOrder(songs) {
+  return songs.map(x => x.album).sort((a, b) => b.localeCompare(a)).filter((val, index) => songs.indexOf(val) === index);
+}
 
 // #9
 /**
@@ -112,7 +135,9 @@ function getAlbumsInReverseOrder(songs) {}
  * @param {string} word - The word to search for in song titles.
  * @returns {string[]} An array of song titles containing the word.
  */
-function songsWithWord(songs, word) {}
+function songsWithWord(songs, word) {
+  return songs.filter(x => x.title.includes(word));
+}
 
 // #10
 /**
@@ -121,14 +146,18 @@ function songsWithWord(songs, word) {}
  * @param {string} artistName - Name of the artist.
  * @returns {number} Total runtime in seconds.
  */
-function getTotalRuntimeOfArtist(songs, artistName) {}
+function getTotalRuntimeOfArtist(songs, artistName) {
+  return songs.filter(x => x.artist === artistName).reduce((total, x) => total + x.runtimeInSeconds, 0)
+}
 
 // Problem #11
 /**
  * Prints artists who have more than one song in the list.
  * @param {Object[]} songs - An array of songs.
  */
-function printArtistsWithMultipleSongs(songs) {}
+function printArtistsWithMultipleSongs(songs) {
+
+}
 
 // Problem #12
 /**
