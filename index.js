@@ -152,7 +152,7 @@ function getAlbumsInReverseOrder(songs) {
 function songsWithWord(songs, word) {
   return songs.filter(song => song.title.includes(word)).map(x=>x.title)
 }
-console.log(songsWithWord(exampleSongData,'Berlin'))
+// console.log(songsWithWord(exampleSongData,'Berlin'))
 
 
 // #10
@@ -162,7 +162,16 @@ console.log(songsWithWord(exampleSongData,'Berlin'))
  * @param {string} artistName - Name of the artist.
  * @returns {number} Total runtime in seconds.
  */
-function getTotalRuntimeOfArtist(songs, artistName) {}
+function getTotalRuntimeOfArtist(songs, artistName) {
+  let count = 0
+  songs.forEach(song => {
+    if(song.artist == artistName )
+      count += song.runtimeInSeconds
+  })
+  return count
+}
+
+// console.log(getTotalRuntimeOfArtist(exampleSongData, 'Saib'))
 
 // Problem #11
 /**
