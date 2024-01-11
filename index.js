@@ -5,6 +5,7 @@ Native Array Methods pt.2 continues with the same dataset: songs. All required f
 
 const { log } = require("console");
 const exampleSongData = require("./data/songs");
+const { title } = require("process");
 // Do not change the line above.
 
 
@@ -272,7 +273,7 @@ function mapArtistsToSongs(songs) {
   })
   return obj
 }
-console.log(mapArtistsToSongs(exampleSongData))
+// console.log(mapArtistsToSongs(exampleSongData))
 
 // Problem #17
 /**
@@ -280,14 +281,38 @@ console.log(mapArtistsToSongs(exampleSongData))
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the longest average song runtime.
  */
-function findAlbumWithLongestAverageRuntime(songs) {}
+function findAlbumWithLongestAverageRuntime(songs) {
+  let obj = {}
+  songs.forEach(song =>{
+    if(obj[song.album] == null){
+      obj[song.album] = [song.runtimeInSeconds, 1]
+    }else{
+      obj[song.album][0] += song.runtimeInSeconds
+      obj[song.album][1] ++
+    }
+  })
+  let longestAvRuntime = ''
+  let count = 0
+  for (let key in obj){
+    if(obj[key][0]/obj[key][1]>count){
+      count= obj[key][0]/obj[key][1]
+      longestAvRuntime = key
+    }
+  }
+  return longestAvRuntime
+}
+// console.log(findAlbumWithLongestAverageRuntime(exampleSongData))
 
 // Problem #18
 /**
  * Logs song titles sorted by their runtime.
  * @param {Object[]} songs - An array of songs.
  */
-function printSongsSortedByRuntime(songs) {}
+function printSongsSortedByRuntime(songs) {
+  let arr = songs.sort((a,b) => a.runtimeInSeconds - b.runtimeInSeconds).map(song => song.title)
+  arr.forEach(title => console.log(title))
+}
+printSongsSortedByRuntime(exampleSongData)
 
 // Problem #19
 /**
