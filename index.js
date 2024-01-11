@@ -248,8 +248,6 @@ function listAlbumTotalRuntimes(songs) {
    }, {});
 }
 
-console.log(listAlbumTotalRuntimes(exampleSongData));
-
 // Problem #15
 /**
  * Finds the first song with a title starting with a specific letter.
@@ -257,7 +255,11 @@ console.log(listAlbumTotalRuntimes(exampleSongData));
  * @param {string} letter - The letter to search for.
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
-function findFirstSongStartingWith(songs, letter) {}
+function findFirstSongStartingWith(songs, letter) {
+  letter = letter.toUpperCase();
+  let letterSongs = songs.filter(x => x.title[0].toUpperCase() == letter);
+  return letterSongs[0];
+}
 
 // Problem #16
 /**
