@@ -315,7 +315,11 @@ function findAlbumWithLongestAverageRuntime(songs) {
  * Logs song titles sorted by their runtime.
  * @param {Object[]} songs - An array of songs.
  */
-function printSongsSortedByRuntime(songs) {}
+function printSongsSortedByRuntime(songs) {
+  songs.sort((x,y) => x.runtimeInSeconds - y.runtimeInSeconds);
+  songTitles = songs.map(x => x.title);
+  console.log(songTitles[0]);
+}
 
 // Problem #19
 /**
