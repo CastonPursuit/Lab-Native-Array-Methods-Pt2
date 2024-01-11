@@ -309,18 +309,19 @@ function printSongsSortedByRuntime(songs) {
  */
 function printAlbumSummaries(songs) {
   let albuns = songs.map((song) => song.album);
-  albuns = albuns.filter((album, idx) => albuns.indexOf(album) === idx);
-  return albuns.forEach((album) => {
-    const albumSongs = songs.filter((song) => song.album == album);
-    const numSongs = albumSongs.length;
-    const totalRuntime = albumSongs.reduce(
-      (acc, song) => acc + song.runtimeInSeconds,
-      0
-    );
-    console.log(
-      `${album}: ${numSongs} songs, Total Runtime: ${totalRuntime} seconds`
-    );
-  });
+  albuns = albuns
+    .filter((album, idx) => albuns.indexOf(album) === idx)
+    .forEach((album) => {
+      const albumSongs = songs.filter((song) => song.album == album);
+      const numSongs = albumSongs.length;
+      const totalRuntime = albumSongs.reduce(
+        (acc, song) => acc + song.runtimeInSeconds,
+        0
+      );
+      console.log(
+        `${album}: ${numSongs} songs, Total Runtime: ${totalRuntime} seconds`
+      );
+    });
 }
 
 // Problem #20
