@@ -326,7 +326,21 @@ function printSongsSortedByRuntime(songs) {
  * Prints a summary of each album, including its name, total runtime, and number of songs.
  * @param {Object[]} songs - An array of songs.
  */
-function printAlbumSummaries(songs) {}
+function printAlbumSummaries(songs) {
+  albumObjs = songs.reduce((albums, song) => {
+    if (!albums[song.album])
+      albums[song.album] = {songCount: 0, totalRuntime: 0};
+
+    albums[song.album].songCount++;
+    albums[song.album].totalRuntime += song.runtimeInSeconds;
+
+    return albums;
+  }, {});
+
+  for (album in albumObjs){
+    console.log(album + ": " + albumObjs[album].songCount + " songs, Total Runtime: " + albumObjs[album].totalRuntime + " seconds");
+  }
+}
 
 // Problem #20
 /**
