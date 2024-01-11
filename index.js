@@ -13,7 +13,16 @@ const exampleSongData = require("./data/songs");
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Sorted song titles.
  */
-function getSortedTitles(songs) {}
+function getSortedTitles(songs) {  // COMPLETE!
+  let allTitles = [];
+  for (let i = 0; i < exampleSongData.length; i++) {
+    if (songs[i].title)
+      allTitles.push(exampleSongData[i].title);
+  }
+  return allTitles.sort((a, b) => a < b ? -1 : 1);
+}
+
+console.log(getSortedTitles(exampleSongData));
 
 // #2
 /**
@@ -22,7 +31,13 @@ function getSortedTitles(songs) {}
  * @param {string} albumName - Name of the album.
  * @returns {string[]} An array of song titles.
  */
-function getSongsFromAlbum(songs, albumName) {}
+function getSongsFromAlbum(songs, albumName) { // COMPLETE!
+  return songs
+    .filter((song) => song.album === albumName)
+    .map((song) => song.title);
+}
+
+console.log(getSongsFromAlbum(exampleSongData, "Horizon Lines"));
 
 // #3 
 /**
@@ -30,7 +45,15 @@ function getSongsFromAlbum(songs, albumName) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
-function categorizeSongsByRuntime(songs) {}
+function categorizeSongsByRuntime(songs) { // COMPLETE!!
+  let resultObj = {};
+  resultObj['longSongs'] = songs.filter(song => song.runtimeInSeconds > 300).length,
+  resultObj['mediumSongs'] = songs.filter(song => (song.runtimeInSeconds > 176) && (song.runtimeInSeconds <= 300)).length,
+  resultObj['shortSongs'] = songs.filter(song => (song.runtimeInSeconds > 0) && (song.runtimeInSeconds <= 175)).length
+  return resultObj;
+}
+
+console.log(categorizeSongsByRuntime(exampleSongData));
 
 // #4
 /**
@@ -38,7 +61,9 @@ function categorizeSongsByRuntime(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the most songs.
  */
-function findAlbumWithMostSongs(songs) {}
+function findAlbumWithMostSongs(songs) {
+  
+}
 
 // #5
 /**
