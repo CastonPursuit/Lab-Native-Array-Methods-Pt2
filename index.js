@@ -153,8 +153,21 @@ function getTotalRuntimeOfArtist(songs, artistName) {}
  * Prints artists who have more than one song in the list.
  * @param {Object[]} songs - An array of songs.
  */
-function printArtistsWithMultipleSongs(songs) {}
+function printArtistsWithMultipleSongs(songs) {
+  let artistSongCount = {};
+  songs.forEach((song) => {
+    if(artistSongCount[song.artist]){
+      artistSongCount[song.artist]++;
+    }else{
+      artistSongCount[song.artist] = 1;
+    }
+    if(artistSongCount[song.artist] > 1){
+      console.log(song.artist);
+    }
+  });
+  }
 
+  console.log(printArtistsWithMultipleSongs(exampleSongData))
 // Problem #12
 /**
  * Logs the longest song title.
