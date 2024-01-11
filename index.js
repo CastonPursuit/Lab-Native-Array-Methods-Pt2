@@ -166,24 +166,8 @@ function getTotalRuntimeOfArtist(songs, artistName) {
  * Prints artists who have more than one song in the list.
  * @param {Object[]} songs - An array of songs.
  */
-// function printArtistsWithMultipleSongs(songs) {
-//   const artistSongs = {};
-//   songs.forEach((song) => {
-//     if (artistSongs.hasOwnProperty(song.artist)) {
-//       artistSongs[song.artist].push(song.title);
-//     } else {
-//       artistSongs[song.artist] = [song.title];
-//     }
-//   });
-//   for (const artis in artistSongs) {
-//     if (artistSongs[artis].length > 1) {
-//       console.log(artis);
-//     }
-//   }
-// }
 function printArtistsWithMultipleSongs(songs) {
   let artists = songs.map((song) => song.artist);
-  // artists = artists.filter((artist, idx) => artists.indexOf(artist) === idx);
   artists
     .filter((artist, idx) => artists.indexOf(artist) === idx)
     .forEach((artist) => {
@@ -284,19 +268,20 @@ function findAlbumWithLongestAverageRuntime(songs) {
     avgRuntime: 0,
   };
   let albuns = songs.map((song) => song.album);
-  albuns.filter((album, idx) => albuns.indexOf(album) === idx);
-  albuns.forEach((albun) => {
-    const albumSongs = songs.filter((song) => song.album == albun);
-    const totalRuntime = albumSongs.reduce(
-      (acc, song) => acc + song.runtimeInSeconds,
-      0
-    );
-    const avgRuntime = totalRuntime / albumSongs.length;
-    if (outputAlbum.avgRuntime <= avgRuntime) {
-      outputAlbum.name = albun;
-      outputAlbum.avgRuntime = avgRuntime;
-    }
-  });
+  albuns
+    .filter((album, idx) => albuns.indexOf(album) === idx)
+    .forEach((albun) => {
+      const albumSongs = songs.filter((song) => song.album == albun);
+      const totalRuntime = albumSongs.reduce(
+        (acc, song) => acc + song.runtimeInSeconds,
+        0
+      );
+      const avgRuntime = totalRuntime / albumSongs.length;
+      if (outputAlbum.avgRuntime <= avgRuntime) {
+        outputAlbum.name = albun;
+        outputAlbum.avgRuntime = avgRuntime;
+      }
+    });
   return outputAlbum.name;
 }
 
