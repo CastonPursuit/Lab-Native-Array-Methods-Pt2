@@ -139,10 +139,9 @@ function getAlbumsInReverseOrder(songs) {
       arr2.push(alb)
       return alb
     }
-    
   })
 }
-console.log(getAlbumsInReverseOrder(exampleSongData))
+// console.log(getAlbumsInReverseOrder(exampleSongData))
 // #9
 /**
  * Returns a list of song titles that contain a specific word.
@@ -150,7 +149,11 @@ console.log(getAlbumsInReverseOrder(exampleSongData))
  * @param {string} word - The word to search for in song titles.
  * @returns {string[]} An array of song titles containing the word.
  */
-function songsWithWord(songs, word) {}
+function songsWithWord(songs, word) {
+  return songs.filter(song => song.title.includes(word)).map(x=>x.title)
+}
+console.log(songsWithWord(exampleSongData,'Berlin'))
+
 
 // #10
 /**
