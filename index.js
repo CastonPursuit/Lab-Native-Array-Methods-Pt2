@@ -62,14 +62,15 @@ function findAlbumWithMostSongs(songs) {
     numSongs: 0,
   };
   let albuns = songs.map((song) => song.album);
-  albuns = albuns.filter((album, idx) => albuns.indexOf(album) === idx);
-  albuns.forEach((album) => {
-    const numSongs = songs.filter((song) => song.album == album).length;
-    if (outputAlbum.numSongs <= numSongs) {
-      outputAlbum.name = album;
-      outputAlbum.numSongs = numSongs;
-    }
-  });
+  albuns
+    .filter((album, idx) => albuns.indexOf(album) === idx)
+    .forEach((album) => {
+      const numSongs = songs.filter((song) => song.album == album).length;
+      if (outputAlbum.numSongs <= numSongs) {
+        outputAlbum.name = album;
+        outputAlbum.numSongs = numSongs;
+      }
+    });
   return outputAlbum.name;
 }
 
@@ -165,21 +166,35 @@ function getTotalRuntimeOfArtist(songs, artistName) {
  * Prints artists who have more than one song in the list.
  * @param {Object[]} songs - An array of songs.
  */
+// function printArtistsWithMultipleSongs(songs) {
+//   const artistSongs = {};
+//   songs.forEach((song) => {
+//     if (artistSongs.hasOwnProperty(song.artist)) {
+//       artistSongs[song.artist].push(song.title);
+//     } else {
+//       artistSongs[song.artist] = [song.title];
+//     }
+//   });
+//   for (const artis in artistSongs) {
+//     if (artistSongs[artis].length > 1) {
+//       console.log(artis);
+//     }
+//   }
+// }
 function printArtistsWithMultipleSongs(songs) {
-  const artistSongs = {};
-  songs.forEach((song) => {
-    if (artistSongs.hasOwnProperty(song.artist)) {
-      artistSongs[song.artist].push(song.title);
-    } else {
-      artistSongs[song.artist] = [song.title];
-    }
-  });
-  for (const artis in artistSongs) {
-    if (artistSongs[artis].length > 1) {
-      console.log(artis);
-    }
-  }
+  let artists = songs.map((song) => song.artist);
+  // artists = artists.filter((artist, idx) => artists.indexOf(artist) === idx);
+  artists
+    .filter((artist, idx) => artists.indexOf(artist) === idx)
+    .forEach((artist) => {
+      const artistSongs = songs.filter((song) => song.artist == artist);
+      if (artistSongs.length > 1) {
+        console.log(artist);
+      }
+    });
 }
+
+printArtistsWithMultipleSongs(exampleSongData);
 
 // Problem #12
 /**
