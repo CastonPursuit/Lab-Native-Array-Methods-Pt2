@@ -2,10 +2,8 @@
 Native Array Methods pt.2 continues with the same dataset: songs. All required functions and array methods (forEach, map, find, some/every, sort) are combined into a single file, each addressing a distinct problem.
 */
 
-
 const exampleSongData = require("./data/songs");
 // Do not change the line above.
-
 
 // #1
 /**
@@ -24,7 +22,7 @@ function getSortedTitles(songs) {}
  */
 function getSongsFromAlbum(songs, albumName) {}
 
-// #3 
+// #3
 /**
  * Categorizes and counts songs based on their runtime.
  * @param {Object[]} songs - An array of songs.
@@ -169,11 +167,10 @@ function printAlbumSummaries(songs) {}
  */
 function findArtistWithMostSongs(songs) {}
 
-
 module.exports = {
   getSortedTitles,
   getSongsFromAlbum,
-  categorizeSongsByRuntime, 
+  categorizeSongsByRuntime,
   findAlbumWithMostSongs,
   getFirstSongInAlbum,
   isThereLongSong,
@@ -190,5 +187,5 @@ module.exports = {
   findAlbumWithLongestAverageRuntime,
   printSongsSortedByRuntime,
   printAlbumSummaries,
-  findArtistWithMostSongs
-};;
+  findArtistWithMostSongs,
+};
