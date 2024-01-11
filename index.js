@@ -178,7 +178,18 @@ function getTotalRuntimeOfArtist(songs, artistName) {
  * Prints artists who have more than one song in the list.
  * @param {Object[]} songs - An array of songs.
  */
-function printArtistsWithMultipleSongs(songs) {}
+function printArtistsWithMultipleSongs(songs) {
+  let obj ={}
+  let arr = songs.map(song => song.artist)
+  for (let art of arr){
+    if(obj[art]==null) obj[art] = 1
+    else obj[art]++
+  }
+  for (let key in obj)
+    if(obj[key]>1)
+      console.log(key)
+}
+// printArtistsWithMultipleSongs(exampleSongData)
 
 // Problem #12
 /**
