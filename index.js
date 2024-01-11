@@ -124,15 +124,25 @@ function getSongsWithDurationInMinutes(songs) {
   songs.forEach(song => song.durationInMinutes = song.runtimeInSeconds/60);
   return songs
 }
-getSongsWithDurationInMinutes(exampleSongData)
+// getSongsWithDurationInMinutes(exampleSongData)
 // #8
 /**
  * Returns the album names in reverse alphabetical order.
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
-function getAlbumsInReverseOrder(songs) {}
-
+function getAlbumsInReverseOrder(songs) {
+  let arr = songs.map(song=> song.album).sort().reverse()
+  let arr2=[]
+  return arr.filter(alb => {
+    if (!arr2.includes(alb)){
+      arr2.push(alb)
+      return alb
+    }
+    
+  })
+}
+console.log(getAlbumsInReverseOrder(exampleSongData))
 // #9
 /**
  * Returns a list of song titles that contain a specific word.
