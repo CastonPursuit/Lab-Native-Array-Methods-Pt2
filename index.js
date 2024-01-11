@@ -227,7 +227,18 @@ function sortSongsByArtistAndTitle(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each album to its total runtime.
  */
-function listAlbumTotalRuntimes(songs) {}
+function listAlbumTotalRuntimes(songs) {
+  let obj = {}
+  songs.forEach(song =>{
+    if(obj[song.album] == null){
+      obj[song.album] = song.runtimeInSeconds
+    }else{
+      obj[song.album] += song.runtimeInSeconds
+    }
+  })
+  return obj
+}
+// console.log(listAlbumTotalRuntimes(exampleSongData))
 
 // Problem #15
 /**
