@@ -76,19 +76,16 @@ function findAlbumWithMostSongs(songs) {
   let compare = 0;
   let mostPlayedAlbum = '';
 
-  songs.reduce((accumulator, song) => {
+  songs.reduce((acc, song) => {
     const album = song.album;
-    if(album in accumulator) {
-      accumulator[album]++;
-    }
-    else {
-      accumulator[album] = 1;
-    }
-    if(accumulator[album] > compare) {
-      compare = accumulator[album];
+    
+    acc[album] = (acc[album] || 0) + 1;
+
+    if(acc[album] > compare) {
+      compare = acc[album];
       mostPlayedAlbum = album;
     }
-    return accumulator;
+    return acc;
  
   } , {});
 
@@ -354,28 +351,30 @@ function printSongsSortedByRuntime(songs) {
  * @param {Object[]} songs - An array of songs.
  */
 function printAlbumSummaries(songs) {
-let sortedArr = [];
-  songs.reduce((categorizedAlbums,currSong) => {
-    album = currSong.album;
-    runtime = currSong.runtimeInSeconds;
   
+let arrangedAlbumObj = songs.reduce((categorizedAlbums,currSong) => {
+      album = currSong.album;
+      runtime = currSong.runtimeInSeconds;
+    
+  
+      if(album in categorizedAlbums) {
+        categorizedAlbums[album].songCount = (categorizedAlbums[album].songCount || 0) + 1;
+        categorizedAlbums[album].totalRuntime = (categorizedAlbums[album].totalRuntime || 0) + runtime;
+      }
+      else {
+        categorizedAlbums[album] = {
+          songCount : 1,
+          totalRuntime : runtime
+        };
+      }
+      
+      return categorizedAlbums;
+    },{} );
 
-    if(album in categorizedAlbums) {
-     categorizedAlbums[album].songCount ++;
-     categorizedAlbums[album].totalRuntime += runtime;
-    }
-    else {
-      categorizedAlbums[album] = {
-        songCount : 1,
-        totalRuntime : runtime
-      };
-    }
-    sortedArr.push(categorizedAlbums)
-    return categorizedAlbums;
-  }, {});
-  
- console.log(sortedArr)
-  // return sortedArr.forEach(currAlbum => console.log(`${currAlbum[album]}: ${currAlbum[album].songCount} songs, Total Runtime: ${currAlbum[album].totalRuntime} seconds`));
+  Object.keys(arrangedAlbumObj).forEach(album => {
+    console.log(`${album}: ${arrangedAlbumObj[album].songCount} songs, Total Runtime: ${arrangedAlbumObj[album].totalRuntime} seconds`)
+  })
+    
 }
 
 printAlbumSummaries(exampleSongData);
@@ -386,7 +385,11 @@ printAlbumSummaries(exampleSongData);
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the artist with the most songs.
  */
-function findArtistWithMostSongs(songs) {}
+function findArtistWithMostSongs(songs) {
+ 
+}
+
+findArtistWithMostSongs(exampleSongData)
 
 
 module.exports = {
@@ -411,3 +414,24 @@ module.exports = {
   printAlbumSummaries,
   findArtistWithMostSongs
 };;
+
+
+
+// songs.reduce((categorizedAlbums,currSong) => {
+  //     album = currSong.album;
+  //     runtime = currSong.runtimeInSeconds;
+    
+  
+  //     if(album in categorizedAlbums) {
+  //      categorizedAlbums[album].songCount ++;
+  //      categorizedAlbums[album].totalRuntime += runtime;
+  //     }
+  //     else {
+  //       categorizedAlbums[album] = {
+  //         songCount : 1,
+  //         totalRuntime : runtime
+  //       };
+  //     }
+      
+  //     return categorizedAlbums;
+  //   },{} );
