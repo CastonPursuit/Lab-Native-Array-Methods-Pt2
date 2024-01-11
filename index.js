@@ -178,8 +178,6 @@ function printArtistsWithMultipleSongs(songs) {
     });
 }
 
-printArtistsWithMultipleSongs(exampleSongData);
-
 // Problem #12
 /**
  * Logs the longest song title.
@@ -330,29 +328,49 @@ function printAlbumSummaries(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the artist with the most songs.
  */
+// function findArtistWithMostSongs(songs) {
+//   const artistWithMostSongs = {
+//     name: "",
+//     numSongs: 0,
+//   };
+
+//   const artistSongs = {};
+//   songs.forEach((song) => {
+//     if (artistSongs.hasOwnProperty(song.artist)) {
+//       artistSongs[song.artist].push(song.title);
+//     } else {
+//       artistSongs[song.artist] = [song.title];
+//     }
+//   });
+
+//   for (const artist in artistSongs) {
+//     const numSongs = artistSongs[artist].length;
+//     if (artistWithMostSongs.numSongs < numSongs) {
+//       artistWithMostSongs.name = artist;
+//       artistWithMostSongs.numSongs = numSongs;
+//     }
+//   }
+//   return artistWithMostSongs.name;
+// }
+// console.log(findArtistWithMostSongs(exampleSongData));
+
 function findArtistWithMostSongs(songs) {
-  const artistWithMostSongs = {
+  const outputArtist = {
     name: "",
-    numSongs: 0,
+    numSongs: "",
   };
+  const artists = songs.map((song) => song.artist);
+  artists
+    .filter((artist, idx) => artists.indexOf(artist) === idx)
+    .forEach((artist) => {
+      const numSongs = songs.filter((song) => song.artist == artist).length;
 
-  const artistSongs = {};
-  songs.forEach((song) => {
-    if (artistSongs.hasOwnProperty(song.artist)) {
-      artistSongs[song.artist].push(song.title);
-    } else {
-      artistSongs[song.artist] = [song.title];
-    }
-  });
-
-  for (const artist in artistSongs) {
-    const numSongs = artistSongs[artist].length;
-    if (artistWithMostSongs.numSongs < numSongs) {
-      artistWithMostSongs.name = artist;
-      artistWithMostSongs.numSongs = numSongs;
-    }
-  }
-  return artistWithMostSongs.name;
+      if (outputArtist.numSongs < numSongs) {
+        outputArtist.name = artist;
+        outputArtist.numSongs = numSongs;
+      }
+    });
+  return outputArtist.name;
 }
 
 module.exports = {
