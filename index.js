@@ -247,7 +247,12 @@ function listAlbumTotalRuntimes(songs) {
  * @param {string} letter - The letter to search for.
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
-function findFirstSongStartingWith(songs, letter) {}
+function findFirstSongStartingWith(songs, letter) {
+  let obj ={}
+  obj = songs.find(song => song.title[0]== letter)
+  return obj
+}
+// console.log(findFirstSongStartingWith(exampleSongData,'P'))
 
 // Problem #16
 /**
