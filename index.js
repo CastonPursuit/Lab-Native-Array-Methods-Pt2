@@ -196,7 +196,19 @@ function printArtistsWithMultipleSongs(songs) {
  * Logs the longest song title.
  * @param {Object[]} songs - An array of songs.
  */
-function printLongestSongTitle(songs) {}
+function printLongestSongTitle(songs) {
+  let longestSong = ''
+  let count = 0
+  songs.forEach(song =>{
+    if(song.title.length>count){
+      count = song.title.length
+      longestSong = song.title
+    }
+  })
+  console.log(longestSong)
+}
+// printLongestSongTitle(exampleSongData)
+
 
 // Problem #13
 /**
