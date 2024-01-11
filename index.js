@@ -377,7 +377,7 @@ let arrangedAlbumObj = songs.reduce((categorizedAlbums,currSong) => {
     
 }
 
-printAlbumSummaries(exampleSongData);
+// printAlbumSummaries(exampleSongData);
 
 // Problem #20
 /**
@@ -386,10 +386,28 @@ printAlbumSummaries(exampleSongData);
  * @returns {string} The name of the artist with the most songs.
  */
 function findArtistWithMostSongs(songs) {
- 
+  let maxCount = 0;
+  let artistWithMost ='';
+
+ songs.reduce((count,currSong) => {
+  let artist = currSong.artist;
+
+  count[artist] = (count[artist] || 0) + 1;
+
+  if(count[artist] > maxCount) {
+    maxCount = count[artist];
+    artistWithMost = artist;
+  }
+
+  return count;
+  
+ }, {});
+
+return artistWithMost;
+
 }
 
-findArtistWithMostSongs(exampleSongData)
+console.log(findArtistWithMostSongs(exampleSongData))
 
 
 module.exports = {
