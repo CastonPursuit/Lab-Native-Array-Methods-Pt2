@@ -13,7 +13,11 @@ const exampleSongData = require("./data/songs");
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Sorted song titles.
  */
-function getSortedTitles(songs) {}
+function getSortedTitles(songs) {
+  return songs.map(x => x.title).sort();
+}
+
+console.log(getSortedTitles(exampleSongData));
 
 // #2
 /**
@@ -22,7 +26,10 @@ function getSortedTitles(songs) {}
  * @param {string} albumName - Name of the album.
  * @returns {string[]} An array of song titles.
  */
-function getSongsFromAlbum(songs, albumName) {}
+function getSongsFromAlbum(songs, albumName) {
+  return songs.filter(x => x.album === albumName).map(x => x.title);
+}
+console.log(getSongsFromAlbum(exampleSongData, 'Bi-To Te-Pu'))
 
 // #3 
 /**
@@ -30,7 +37,29 @@ function getSongsFromAlbum(songs, albumName) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
-function categorizeSongsByRuntime(songs) {}
+function categorizeSongsByRuntime(songs) {
+ return { 
+        longSongs: songs.filter(x => x.runtimeInSeconds > 220).length,
+        mediumSongs: songs.filter(x => x.runtimeInSeconds >= 180).length,
+        shortSongs: songs.filter(x => x.runtimeInSeconds < 180).length
+ };
+      };
+
+
+      // songs.forEach((song) => {
+      //   if (song.runtimeInSeconds < 180) {
+      //     runtimeCategorization.short++;
+      //   } else if (song.runtimeInSeconds >= 180 && song.runtimeInSeconds <= 300) {
+      //     runtimeCategorization.medium++;
+      //   } else if (song.runtimeInSeconds > 300) {
+      //     runtimeCategorization.long++;
+      //   }
+      // });
+
+
+
+
+console.log(categorizeSongsByRuntime(exampleSongData))
 
 // #4
 /**
@@ -38,7 +67,12 @@ function categorizeSongsByRuntime(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the most songs.
  */
-function findAlbumWithMostSongs(songs) {}
+function findAlbumWithMostSongs(songs) {
+  let getAlbum = songs.reduce((albumName, song) => albumName.title > albumName.album ? albumName : song);
+  return getAlbum.album;
+};
+
+console.log(findAlbumWithMostSongs(exampleSongData))
 
 // #5
 /**
