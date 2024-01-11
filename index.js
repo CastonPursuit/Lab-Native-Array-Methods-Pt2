@@ -3,34 +3,67 @@ Native Array Methods pt.2 continues with the same dataset: songs. All required f
 */
 
 
+const songs = require("./data/songs");
 const exampleSongData = require("./data/songs");
 // Do not change the line above.
 
 
 // #1
 /**
- * Returns the titles of songs sorted alphabetically.
- * @param {Object[]} songs - An array of songs.
- * @returns {string[]} Sorted song titles.
- */
-function getSortedTitles(songs) {}
+//  * Returns the titles of songs sorted alphabetically.
+//  * @param {Object[]} songs - An array of songs.
+//  * @returns {string[]} Sorted song titles.
+//  */
+function getSortedTitles(songs) {
+  return songs.map(x => x.title).sort()
+  }
+///console.log(getSortedTitles(exampleSongData));
 
-// #2
-/**
- * Returns the titles of all songs from a specified album.
- * @param {Object[]} songs - An array of songs.
- * @param {string} albumName - Name of the album.
- * @returns {string[]} An array of song titles.
- */
-function getSongsFromAlbum(songs, albumName) {}
-
+// // #2
+// /**
+//  * Returns the titles of all songs from a specified album.
+//  * @param {Object[]} songs - An array of songs.
+//  * @param {string} albumName - Name of the album.
+//  * @returns {string[]} An array of song titles.
+//  */
+function getSongsFromAlbum(songs, albumName) {
+  let newA =[ ]
+  for(let k=0; k < songs.length; k++){
+    if(songs[k].album === albumName){
+      newA.push( songs[k].title);
+    }
+  }
+  return newA;
+}
+// console.log(getSongsFromAlbum(exampleSongData,"Bluewerks Vol. 1: Up Down Left Right"));
 // #3 
 /**
  * Categorizes and counts songs based on their runtime.
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
-function categorizeSongsByRuntime(songs) {}
+
+function categorizeSongsByRuntime(songs) {
+  let shortSongs = 0;
+  let mediumSongs = 0;
+  let longSongs = 0;
+
+  for (let i = 0; i < songs.length; i++) {
+    if (songs[i].runtimeInSeconds < 180) {
+      shortSongs++;
+    } else if (songs[i].runtimeInSeconds >= 180 && songs[i].runtimeInSeconds <= 300) {
+      mediumSongs++;
+    } else if (songs[i].runtimeInSeconds > 300) {
+      longSongs++;
+    }
+  }
+
+  const songObj = { shortSongs, mediumSongs, longSongs };
+  return songObj;
+}
+
+
+  
 
 // #4
 /**
@@ -38,8 +71,13 @@ function categorizeSongsByRuntime(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the most songs.
  */
-function findAlbumWithMostSongs(songs) {}
-
+function findAlbumWithMostSongs(songs) {
+  let albumNames = songs.map((songAlbum)=> songAlbum.album)
+    console.log(albumNames);
+  }
+  findAlbumWithMostSongs(exampleSongData);
+  
+   
 // #5
 /**
  * Returns details of the first song in a specific album.
@@ -47,7 +85,16 @@ function findAlbumWithMostSongs(songs) {}
  * @param {string} albumName - Name of the album.
  * @returns {Object|null} First song object in the album or null.
  */
-function getFirstSongInAlbum(songs, albumName) {}
+function getFirstSongInAlbum(songs, albumName) {
+  
+
+ // findIndex(callback(element, index, array)): Returns the index of the 
+ // first element in the array that satisfies the provided testing function.
+
+
+  return
+  //returns an object with value of the first in an album or null
+}
 
 // #6
 /**
@@ -170,25 +217,25 @@ function printAlbumSummaries(songs) {}
 function findArtistWithMostSongs(songs) {}
 
 
-module.exports = {
-  getSortedTitles,
-  getSongsFromAlbum,
-  categorizeSongsByRuntime, 
-  findAlbumWithMostSongs,
-  getFirstSongInAlbum,
-  isThereLongSong,
-  getSongsWithDurationInMinutes,
-  getAlbumsInReverseOrder,
-  songsWithWord,
-  getTotalRuntimeOfArtist,
-  printArtistsWithMultipleSongs,
-  sortSongsByArtistAndTitle,
-  printLongestSongTitle,
-  listAlbumTotalRuntimes,
-  findFirstSongStartingWith,
-  mapArtistsToSongs,
-  findAlbumWithLongestAverageRuntime,
-  printSongsSortedByRuntime,
-  printAlbumSummaries,
-  findArtistWithMostSongs
-};;
+ module.exports = {
+   getSortedTitles,
+   getSongsFromAlbum,
+   categorizeSongsByRuntime, 
+   findAlbumWithMostSongs,
+   getFirstSongInAlbum,
+   isThereLongSong,
+   getSongsWithDurationInMinutes,
+   getAlbumsInReverseOrder,
+   songsWithWord,
+   getTotalRuntimeOfArtist,
+   printArtistsWithMultipleSongs,
+   sortSongsByArtistAndTitle,
+   printLongestSongTitle,
+   listAlbumTotalRuntimes,
+   findFirstSongStartingWith,
+   mapArtistsToSongs,
+   findAlbumWithLongestAverageRuntime, 
+   printSongsSortedByRuntime,
+   printAlbumSummaries,
+   findArtistWithMostSongs
+ };;
