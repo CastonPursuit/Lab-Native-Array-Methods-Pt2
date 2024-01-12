@@ -17,7 +17,7 @@ function getSortedTitles(songs) {
   return songs.map(x => x.title).sort();
 }
 
-console.log(getSortedTitles(exampleSongData));
+// console.log(getSortedTitles(exampleSongData));
 
 
 // #2
@@ -37,7 +37,23 @@ function getSongsFromAlbum(songs, albumName) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
-function categorizeSongsByRuntime(songs) {}
+function categorizeSongsByRuntime(songs) {
+  const songLength = {shortSongs: 0 , mediumSongs: 0,longSongs: 0 }
+ 
+  songs.forEach(song => {
+  if (song.runtimeInSeconds < 180){
+   songLength.shortSongs++
+  } else if (song.runtimeInSeconds >= 180 && song.runtimeInSeconds < 240){
+    songLength.mediumSongs++
+  } else {
+    songLength.longSongs++
+  }
+  })
+
+  return songLength
+
+
+}
 
 // #4
 /**
@@ -45,7 +61,28 @@ function categorizeSongsByRuntime(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the most songs.
  */
-function findAlbumWithMostSongs(songs) {}
+function findAlbumWithMostSongs(songs) {
+  const albumWithMost = songs.reduce((acc,song) => {
+     if (acc[song.album]) {
+      acc[song.album]++
+     } else {
+      acc[song.album] = 1
+     }
+     return acc
+  
+    }, {});
+    
+    let count = 0
+    let result = ''
+    for (const album in albumWithMost) {
+      if(albumWithMost[album] > count) {
+        count = albumWithMost[album]
+        result = album
+    }
+    return result
+  }
+}
+
 
 // #5
 /**
@@ -136,7 +173,19 @@ function listAlbumTotalRuntimes(songs) {}
  * @param {string} letter - The letter to search for.
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
-function findFirstSongStartingWith(songs, letter) {}
+function findFirstSongStartingWith(songs, letter) {
+
+  const firstSongWithLetter = songs.find(song => (song.title[0] === letter))
+  return firstSongWithLetter
+
+
+
+
+}
+
+
+console.log(findFirstSongStartingWith(exampleSongData, "B"));
+
 
 // Problem #16
 /**
@@ -144,7 +193,14 @@ function findFirstSongStartingWith(songs, letter) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
-function mapArtistsToSongs(songs) {}
+function mapArtistsToSongs(songs) {
+
+
+
+
+
+  
+}
 
 // Problem #17
 /**
