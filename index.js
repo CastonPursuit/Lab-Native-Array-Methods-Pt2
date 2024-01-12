@@ -164,6 +164,7 @@ function printArtistsWithMultipleSongs(songs) {
     if(artistSongCount[song.artist] > 1){
       console.log(song.artist);
     }
+    return artistSongCount;
   });
   }
 
@@ -212,7 +213,12 @@ console.log(listAlbumTotalRuntimes(exampleSongData))
  * @param {string} letter - The letter to search for.
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
-function findFirstSongStartingWith(songs, letter) {}
+function findFirstSongStartingWith(songs, letter) {
+  const firstSongWithLetter = songs.find(song => song.title[0] === letter);
+  return firstSongWithLetter
+};
+
+console.log(findFirstSongStartingWith(exampleSongData, "U") )
 
 // Problem #16
 /**
