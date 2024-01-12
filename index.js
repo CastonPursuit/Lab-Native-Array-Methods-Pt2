@@ -194,13 +194,21 @@ console.log(findFirstSongStartingWith(exampleSongData, "B"));
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
 function mapArtistsToSongs(songs) {
-
-
-
-
-
+  let artistMap = {};
+  songs.map(song => {
+    if (!artistMap.hasOwnProperty(song.artist)){
+      artistMap[song.artist] = [song.title]
+    }
+    else {
+      artistMap[song.artist].push(song.title)
+    }
+  })
   
+  return artistMap
+
 }
+
+mapArtistsToSongs(exampleSongData);
 
 // Problem #17
 /**
