@@ -234,15 +234,14 @@ function printSongsSortedByRuntime(songs) {
 /**
  * Prints a summary of each album, including its name, total runtime, and number of songs.
  * @param {Object[]} songs - An array of songs.
- */let albumSummaries = {}
+ */let albumSummaries = {
     songs.forEach(song => {
-      if(!albumSummaries[song.album]){
+      if (!albumSummaries[song.album]){
         albumSummaries[song.album] ={ albumName: song.album, songCount: 1, totalRuntime: song.runtimeInSeconds};
       }
 
-    })
-  }
-
+ }
+}
 function printAlbumSummaries(songs) {}
 
 // Problem #20
