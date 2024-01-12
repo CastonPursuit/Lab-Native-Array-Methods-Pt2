@@ -235,11 +235,7 @@ function sortSongsByArtistAndTitle(songs) {
  */
 function listAlbumTotalRuntimes(songs) {
   return songs.reduce((obj, song) => {
-    if(obj.hasOwnProperty(song.album)) {
-      obj[song.album] += song.runtimeInSeconds
-    }else {
-      obj[song.album] = song.runtimeInSeconds
-    } 
+    obj[song.album] = (obj[song.album] || 0) + song.runtimeInSeconds
     return obj;
   },{})
 }
@@ -264,23 +260,15 @@ function findFirstSongStartingWith(songs, letter) {
  */
 
 function mapArtistsToSongs(songs) {
-  // ! With this I wanted to create an object with the key being the artist and the value being an array of the artist songs
-  // ! Map out an array of the artist
   const artists = songs.map(song => song.artist)
-  // ! create an object to return 
   const mappedObject = {};
-  // ! Loop through the artist array
   for(const artist of artists) {
-  // ! create an array for every artist
     const arr = []
-  // ! Now loop through the songs array
     for(const song of songs) {
-  // ! if the artist we are currently on in the artist loop equals the current song object artist push the current song object title in the arr 
       if(artist === song.artist) {
         arr.push(song.title)
       }
     }
-  // ! after that loop the array will have the artist songs in from the songs loop and assigin the key and value pairs
     if(mappedObject.hasOwnProperty(artist)){
       continue;
     }
