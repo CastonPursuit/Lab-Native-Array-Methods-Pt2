@@ -136,7 +136,7 @@ function getAlbumsInReverseOrder(songs) {
  * @returns {string[]} An array of song titles containing the word.
  */
 function songsWithWord(songs, word) {
-  return songs.filter(x => x.title.includes(word));
+  return songs.map(x => x.title).filter(x => x.includes(word));
 }
 
 // #10
@@ -231,7 +231,9 @@ function findFirstSongStartingWith(songs, letter) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
-function mapArtistsToSongs(songs) {}
+function mapArtistsToSongs(songs) {
+
+}
 
 // Problem #17
 /**
@@ -240,7 +242,8 @@ function mapArtistsToSongs(songs) {}
  * @returns {string} The name of the album with the longest average song runtime.
  */
 function findAlbumWithLongestAverageRuntime(songs) {
-
+  //need to find avg runtime of each album!
+  return songs.map(x => x.album).sort((a, b) => b.runtimeInSeconds - a.runtimeInSeconds)[0];
 }
 
 // Problem #18
@@ -249,7 +252,7 @@ function findAlbumWithLongestAverageRuntime(songs) {
  * @param {Object[]} songs - An array of songs.
  */
 function printSongsSortedByRuntime(songs) {
-
+  console.log(songs.map(x => x.title).sort((a, b) => a.runtimeInSeconds - b.runtimeInSeconds)[0]);
 }
 
 // Problem #19
@@ -258,7 +261,15 @@ function printSongsSortedByRuntime(songs) {
  * @param {Object[]} songs - An array of songs.
  */
 function printAlbumSummaries(songs) {
+  // return songs.forEach(x => {
+  //   let totalRuntime = songs.forEach(song => ...?...);
 
+  //   return {
+  //     name: x.name,
+  //     totalRuntime: totalRuntime,
+  //     numberOfSongs : numberOfSongs
+  //   }
+  // })
 }
 
 // Problem #20
