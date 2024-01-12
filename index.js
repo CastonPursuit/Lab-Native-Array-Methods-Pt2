@@ -312,14 +312,28 @@ function printSongsSortedByRuntime(songs) {
   let arr = songs.sort((a,b) => a.runtimeInSeconds - b.runtimeInSeconds).map(song => song.title)
   arr.forEach(title => console.log(title))
 }
-printSongsSortedByRuntime(exampleSongData)
+// printSongsSortedByRuntime(exampleSongData)
 
 // Problem #19
 /**
  * Prints a summary of each album, including its name, total runtime, and number of songs.
  * @param {Object[]} songs - An array of songs.
  */
-function printAlbumSummaries(songs) {}
+function printAlbumSummaries(songs) {
+  let objAlbSum = {}
+  songs.forEach(song => {
+    if (objAlbSum[song.album]==null) {
+      objAlbSum[song.album] = { totalRuntime: 0, count: 0 };
+    }
+    objAlbSum[song.album].totalRuntime += song.runtimeInSeconds;
+    objAlbSum[song.album].count++;
+  });
+
+  for(let key in objAlbSum){
+    console.log (`${key}: ${objAlbSum[key].count} songs, Total Runtime: ${objAlbSum[key].totalRuntime} seconds`)
+  }
+}
+// printAlbumSummaries(exampleSongData)
 
 // Problem #20
 /**
@@ -328,6 +342,7 @@ function printAlbumSummaries(songs) {}
  * @returns {string} The name of the artist with the most songs.
  */
 function findArtistWithMostSongs(songs) {}
+findArtistWithMostSongs(exampleSongData)
 
 
 module.exports = {
