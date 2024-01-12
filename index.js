@@ -14,6 +14,7 @@ const exampleSongData = require("./data/songs");
  * @returns {string[]} Sorted song titles.
  */
 function getSortedTitles(songs) {
+
   return songs.map(song => song.title).sort();
 }
 
@@ -26,15 +27,48 @@ function getSortedTitles(songs) {
  */
 function getSongsFromAlbum(songs, albumName) {
 
-}
+  let titlesFromSpecificAlbum = [];
 
+   songs.filter((findAlbum) => {
+
+    if (findAlbum.album === albumName) {
+      titlesFromSpecificAlbum.push(findAlbum.title);
+      return true; 
+
+    } else {
+      return false; 
+    }
+  });
+
+  return titlesFromSpecificAlbum;
+}
 // #3 
 /**
  * Categorizes and counts songs based on their runtime.
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
-function categorizeSongsByRuntime(songs) {}
+
+function categorizeSongsByRuntime(songs) {
+
+  let songLengthByRuntime = { "shortSongs": 0, "mediumSongs": 0, "longSongs": 0 };
+
+  songs.forEach((songObj) => {
+    if (songObj.runtimeInSeconds < 180) {
+      songLengthByRuntime.shortSongs++;
+
+    } else if (songObj.runtimeInSeconds >= 180 && songObj.runtimeInSeconds <= 300) {
+      songLengthByRuntime.mediumSongs++;
+
+    } else if (songObj.runtimeInSeconds > 300) {
+      songLengthByRuntime.longSongs++;
+    }
+  });
+
+  return songLengthByRuntime;
+}
+
+
 
 // #4
 /**
@@ -42,7 +76,23 @@ function categorizeSongsByRuntime(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the most songs.
  */
-function findAlbumWithMostSongs(songs) {}
+function findAlbumWithMostSongs(songs) {
+
+  const mostSongs = songs.reduce((bucket, currObj) => {
+    let currentAlbum = currObj.album;
+    bucket[currentAlbum] = (bucket[currentAlbum] || 0) + 1;
+    
+    if (bucket[currentAlbum] > bucket[topCount]) {
+      bucket[topCount] = bucket[currentAlbum];
+      bucket[albumWithMostSongs] = currentAlbum;
+    }
+    
+    return bucket;
+  }, { topCount: 0, albumWithMostSongs: undefined });
+
+  return `${mostSongs.albumWithMostSongs}`;
+}
+
 
 // #5
 /**
@@ -51,7 +101,9 @@ function findAlbumWithMostSongs(songs) {}
  * @param {string} albumName - Name of the album.
  * @returns {Object|null} First song object in the album or null.
  */
-function getFirstSongInAlbum(songs, albumName) {}
+function getFirstSongInAlbum(songs, albumName) {
+
+}
 
 // #6
 /**
@@ -133,7 +185,11 @@ function listAlbumTotalRuntimes(songs) {}
  * @param {string} letter - The letter to search for.
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
-function findFirstSongStartingWith(songs, letter) {}
+function findFirstSongStartingWith(songs, letter) {
+  // let firstSong = songs.find((song) => )
+
+  return firstSong || null
+}
 
 // Problem #16
 /**
