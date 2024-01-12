@@ -124,13 +124,8 @@ function getAlbumsInReverseOrder(songs) {
       return 1
     }
   });
-  //  ! This removes the duplicate album names
-  for(let i = 0; i < array.length; i++) {
-    if(array[i] === array[i + 1] || array[i] === array[i - 1]){
-      array.splice(i,1)
-    }
-  }
-  return array
+  return array.filter((item, 
+    index) => array.indexOf(item) === index)
 }
 
 // #9
