@@ -248,7 +248,7 @@ function listAlbumTotalRuntimes(songs) {
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
 function findFirstSongStartingWith(songs, letter) {
-  return songs.find(song => song.title.charAt(0) === letter ? song : null)
+  return songs.find(song => song.title[0] === letter) || null;
 }
 
 
@@ -310,8 +310,8 @@ function findAlbumWithLongestAverageRuntime(songs) {
     }
     mappedObject[album] = Math.round(total / songAmount)
   }
-  for(const album in mappedObject){
-    if(mappedObject[album] > longest){
+  for(const album in mappedObject) {
+    if(mappedObject[album] > longest) {
       longest = mappedObject[album]
       albumName = album
     }
