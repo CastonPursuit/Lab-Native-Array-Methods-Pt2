@@ -125,7 +125,7 @@ function getSongsWithDurationInMinutes(songs) {
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
 function getAlbumsInReverseOrder(songs) {
-  return songs.map(x => x.album).sort((a, b) => b.localeCompare(a)).filter((val, index) => songs.indexOf(val) === index);
+  return songs.map(x => x.album).filter((val, index) => songs.indexOf(val) === index).sort((a, b) => b.localeCompare(a));
 }
 
 // #9
@@ -195,23 +195,17 @@ function sortSongsByArtistAndTitle(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each album to its total runtime.
  */
-// function listAlbumTotalRuntimes(songs) {
-//   return songs.map(x => {
-//     let album = songs.map(x => x.album);
-//     let total = songs.reduce((total, x) => total + x.runtimeInSeconds, 0)
-//     return {
-//       album: total
-//     }
-//   })
-// }
-
 function listAlbumTotalRuntimes(songs) {
-  // let albumTotalRuntimes = {};
-  // songs.forEach(x => {
-  //   if ()
-  // })
-  // return albumTotalRuntimes;
+
 }
+
+// function listAlbumTotalRuntimes(songs) {
+//   // let albumTotalRuntimes = {};
+//   // songs.forEach(x => {
+//   //   if ()
+//   // })
+//   // return albumTotalRuntimes;
+// }
 
 
 // Problem #15
@@ -221,8 +215,12 @@ function listAlbumTotalRuntimes(songs) {
  * @param {string} letter - The letter to search for.
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
+// function findFirstSongStartingWith(songs, letter) {
+//   return songs.find(x => x.title.startsWith(letter));
+// }
+
 function findFirstSongStartingWith(songs, letter) {
-  return songs.find(x => x.title.startsWith(letter));
+  return songs.find(x => x.title[0].startsWith(letter));
 }
 
 // Problem #16
@@ -232,8 +230,29 @@ function findFirstSongStartingWith(songs, letter) {
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
 function mapArtistsToSongs(songs) {
-
+  return songs.forEach(x => {
+    let artist = x.artist;
+    let songTitles = songs.map(x => x.title)
+    return {
+      artist: x.artist,
+      songs: songTitles
+    }
+  })
 }
+
+
+
+
+// function mapArtistsToSongs(songs) {
+//   return songs.forEach(x => {
+//     let artist = x.artist;
+//     let songTitles = songs.map(x => x.title)
+//     return {
+//       artist: x.artist,
+//       songs: songTitles
+//     }
+//   })
+// }
 
 // Problem #17
 /**
