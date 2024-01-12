@@ -341,8 +341,22 @@ function printAlbumSummaries(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the artist with the most songs.
  */
-function findArtistWithMostSongs(songs) {}
-findArtistWithMostSongs(exampleSongData)
+function findArtistWithMostSongs(songs) {
+  let artistAndSongs = {}
+  let artist = ''
+  let count = 0
+  songs.forEach(song =>{
+    if(artistAndSongs[song.artist]==null) artistAndSongs[song.artist] = 1
+    else artistAndSongs[song.artist]++;
+
+    if(artistAndSongs[song.artist]>count){
+      artist = song.artist
+      count = artistAndSongs[song.artist]
+    } 
+  })
+  return artist
+}
+console.log(findArtistWithMostSongs(exampleSongData))
 
 
 module.exports = {
