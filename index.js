@@ -105,10 +105,8 @@ function isThereLongSong(songs, runtime) {
  * @returns {Object[]} Array of song objects with runtime in minutes.
  */
 function getSongsWithDurationInMinutes(songs) {
-  for(let i = 0; i < songs.length; i++) {
-    songs[i].durationInMinutes = songs[i].runtimeInSeconds / 60
-  }
-  return songs;
+  songs.forEach(song => song["durationInMinutes"] = song.runtimeInSeconds / 60)
+  return songs
 }
 
 // #8
@@ -260,21 +258,17 @@ function findFirstSongStartingWith(songs, letter) {
  */
 
 function mapArtistsToSongs(songs) {
-  const artists = songs.map(song => song.artist)
-  const mappedObject = {};
-  for(const artist of artists) {
-    const arr = []
-    for(const song of songs) {
-      if(artist === song.artist) {
-        arr.push(song.title)
+  // * MY CODE 
+  return songs.reduce((object, song) => {
+    let arr = []
+    for(const songs2 of songs){
+      if(song.artist === songs2.artist){
+        arr.push(songs2.title)
       }
     }
-    if(mappedObject.hasOwnProperty(artist)){
-      continue;
-    }
-    mappedObject[artist] = arr
-  }
-  return mappedObject
+    object[song.artist] = (object[song.artist] || arr)
+    return object
+  },{})
 }
 
 
@@ -296,10 +290,7 @@ function findAlbumWithLongestAverageRuntime(songs) {
         arr.push(song.runtimeInSeconds)
       }
     }
-    if(mappedObject.hasOwnProperty(album)){
-      continue;
-    }
-    mappedObject[album] = arr
+    mappedObject[album] = (mappedObject[album] ||arr)
   }
   for(const album in mappedObject){
     let total = 0
@@ -325,10 +316,8 @@ function findAlbumWithLongestAverageRuntime(songs) {
  * @param {Object[]} songs - An array of songs.
  */
 function printSongsSortedByRuntime(songs) {
-  let sortedRunitimes = songs.sort((a, b) => a.runtimeInSeconds - b.runtimeInSeconds)
-  for(const song of sortedRunitimes) {
-    console.log(song.title)
-  }
+  songs.sort((a, b) => a.runtimeInSeconds - b.runtimeInSeconds)
+      .forEach((song) => console.log(song.title))
 }
 
 // Problem #19
@@ -337,30 +326,51 @@ function printSongsSortedByRuntime(songs) {
  * @param {Object[]} songs - An array of songs.
  */
 function printAlbumSummaries(songs) {
-  const albums = songs.map(song => song.album)
-  let albumWithRuntimeObject = {};
-  for(const album of albums) {
-    const arr = []
-    for(const song of songs) {
-      if(album === song.album) {
-        arr.push(song.runtimeInSeconds)
-      }
+  // * CLASSCODE
+  let albumSummaries = {};
+  songs.forEach(song => {
+    if(!albumSummaries[song.album]){
+      albumSummaries[song.album] = {
+        albumName: song.album,
+        songCount: 1,
+        totalRuntime: song.runtimeInSeconds
+        }
+    }else {
+      albumSummaries[song.album].songCount++;
+      albumSummaries[song.album].totalRuntime += song.runtimeInSeconds;
     }
-    if(albumWithRuntimeObject.hasOwnProperty(album)){
-      continue;
-    }
-    albumWithRuntimeObject[album] = arr
+  })
+  for(const summary in albumSummaries) {
+    console.log(`${albumSummaries[summary].albumName}: ${albumSummaries[summary].songCount} songs, Total Runtime: ${albumSummaries[summary].totalRuntime} seconds`)
+    //                                             To account for the s in a plural value       ^ ${albumSummaries[summary].songCount > 1 ? "s" : ""}
   }
-  for(const album in albumWithRuntimeObject){
-    let songtotal = 0
-    let totalRuntime = 0
-    for(const time of albumWithRuntimeObject[album]) {
-      totalRuntime += time
-      songtotal++
-    }
-    console.log(`${album}: ${songtotal} songs, Total Runtime: ${totalRuntime} seconds`)
-  }
+
+  // * MYCODE
+  // const albums = songs.map(song => song.album)
+  // let albumWithRuntimeObject = {};
+  // for(const album of albums) {
+  //   const arr = []
+  //   for(const song of songs) {
+  //     if(album === song.album) {
+  //       arr.push(song.runtimeInSeconds)
+  //     }
+  //   }
+  //   if(albumWithRuntimeObject.hasOwnProperty(album)){
+  //     continue;
+  //   }
+  //   albumWithRuntimeObject[album] = arr
+  // }
+  // for(const album in albumWithRuntimeObject){
+  //   let songtotal = 0
+  //   let totalRuntime = 0
+  //   for(const time of albumWithRuntimeObject[album]) {
+  //     totalRuntime += time
+  //     songtotal++
+  //   }
+  //   console.log(`${album}: ${songtotal} songs, Total Runtime: ${totalRuntime} seconds`)
+  // }
 }
+
 // Problem #20
 /**
  * Finds the artist with the most songs in the list.
