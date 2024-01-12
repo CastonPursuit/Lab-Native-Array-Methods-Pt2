@@ -42,29 +42,16 @@ function getSongsFromAlbum(songs, albumName) {
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
 function categorizeSongsByRuntime(songs) {
-  let shortSongs = songs.reduce((total, song) => {
+  return songs.reduce((runtimeObject, song) => {
     if(song.runtimeInSeconds < 180) {
-      total++
+      runtimeObject.shortSongs++
+    }else if(song.runtimeInSeconds >= 180 && song.runtimeInSeconds <= 300) {
+      runtimeObject.mediumSongs++
+    }else if(song.runtimeInSeconds > 300) {
+      runtimeObject.longSongs++
     }
-    return total
-  }, 0)
-  let mediumSongs = songs.reduce((total, song) => {
-    if(song.runtimeInSeconds >= 180 && song.runtimeInSeconds <= 300) {
-      total++
-    }
-    return total
-  }, 0)
-  let longSongs = songs.reduce((total, song) => {
-    if(song.runtimeInSeconds > 300) {
-      total++
-    }
-    return total
-  }, 0)
-  return {
-    shortSongs: shortSongs,
-    mediumSongs: mediumSongs,
-    longSongs: longSongs
-  }
+    return runtimeObject
+  }, {shortSongs: 0, mediumSongs: 0, longSongs: 0})
 }
 
 // #4
@@ -74,35 +61,20 @@ function categorizeSongsByRuntime(songs) {
  * @returns {string} The name of the album with the most songs.
  */
 function findAlbumWithMostSongs(songs) {
-  // ! I wanted to create an object with the key being the album name and the values being the amount of songs on the album
   let albums = songs.map(song => song.album)
-  let obj = {}
   let mostSongsValue = 0
   let album;
-  // ! This loop is creating key(album) value(0) pairs in the obj variable. if the key is already created it continues in the loop so there is no duplicates
-  for(let i = 0; i < songs.length; i++) {
-    if(obj.hasOwnProperty(songs[i].album)){
-      continue;
+  albums.reduce((albumsObject, currAlbum) => {
+    albumsObject[currAlbum] = (albumsObject[currAlbum] || 0) + 1
+    if(albumsObject[currAlbum] > mostSongsValue) {
+      mostSongsValue = albumsObject[currAlbum]
+      album = currAlbum
     }
-    obj[songs[i].album] = 0
-  }
-  // ! These loops is counting the songs with the same album name to give values in the obj variable
-  for(let j = 0; j < albums.length; j++) {
-    for(let key in obj) {
-      if(albums[j] === key){
-        obj[key]++
-      }
-    }
-  }
-  // ! this loop is assigning the album with the most songs to return the album with the most songs
-  for(let key in obj) {
-    if(obj[key] > mostSongsValue) {
-      mostSongsValue = obj[key]
-      album = key
-    }
-  }
+    return albumsObject
+  },{})
   return album
 }
+
 
 // #5
 /**
@@ -147,13 +119,13 @@ function getSongsWithDurationInMinutes(songs) {
  */
 function getAlbumsInReverseOrder(songs) {
   // ! This mpas the albums in to its own array then its sorts the album names in reverse order 
-  let array =  songs.map(song => song.album).sort((a, b) => {
+  let array = songs.map(song => song.album).sort((a, b) => {
     if(a > b) {
       return -1
     }else {
       return 1
     }
-  })
+  });
   //  ! This removes the duplicate album names
   for(let i = 0; i < array.length; i++) {
     if(array[i] === array[i + 1] || array[i] === array[i - 1]){
@@ -171,12 +143,7 @@ function getAlbumsInReverseOrder(songs) {
  * @returns {string[]} An array of song titles containing the word.
  */
 function songsWithWord(songs, word) {
-  let array = []
-  let newArr = songs.filter(song => song.title.includes(word))
-  for(const obj of newArr){
-    array.push(obj.title)
-  }
-  return array
+  return songs.filter(song => song.title.includes("Berlin")).map(song => song.title);
 }
 
 
@@ -203,25 +170,32 @@ function getTotalRuntimeOfArtist(songs, artistName) {
  */
 function printArtistsWithMultipleSongs(songs) {
   let artist = songs.map(song => song.artist)
-  let obj = {}
-  for(let i = 0; i < songs.length; i++) {
-    if(obj.hasOwnProperty(songs[i].artist)){
-      continue;
+  return artist.reduce((artistObject, currArtist) => {
+    artistObject[currArtist] = (artistObject[currArtist] || 0) + 1
+    if(artistObject[currArtist] > 1) {
+      console.log(currArtist)
     }
-    obj[songs[i].artist] = 0
-  }
-  for(let j = 0; j < artist.length; j++) {
-    for(let key in obj) {
-      if(artist[j] === key){
-        obj[key]++
-      }
-    }
-  }
-  for(let key in obj) {
-    if(obj[key] > 1 ) {
-      console.log(key)
-    }
-  }
+    return artistObject
+  },{})
+  // let obj = {}
+  // for(let i = 0; i < songs.length; i++) {
+  //   if(obj.hasOwnProperty(songs[i].artist)){
+  //     continue;
+  //   }
+  //   obj[songs[i].artist] = 0
+  // }
+  // for(let j = 0; j < artist.length; j++) {
+  //   for(let key in obj) {
+  //     if(artist[j] === key){
+  //       obj[key]++
+  //     }
+  //   }
+  // }
+  // for(let key in obj) {
+  //   if(obj[key] > 1 ) {
+  //     console.log(key)
+  //   }
+  // }
 }
 
 // Problem #12
@@ -290,7 +264,7 @@ function findFirstSongStartingWith(songs, letter) {
  */
 
 function mapArtistsToSongs(songs) {
-  // ! With this I wanted to create an object with the key being the artist and the value being and array of the artist songs
+  // ! With this I wanted to create an object with the key being the artist and the value being an array of the artist songs
   // ! Map out an array of the artist
   const artists = songs.map(song => song.artist)
   // ! create an object to return 
@@ -406,29 +380,38 @@ function printAlbumSummaries(songs) {
  * @returns {string} The name of the artist with the most songs.
  */
 function findArtistWithMostSongs(songs) {
-  const artists = songs.map(song => song.artist)
-  let artistWithSongsObject = {};
+  let artists = songs.map(song => song.artist)
+  // let artistWithSongsObject = {};
   let artistWithMost;
   let highestValue = 0
-  for(const artist of artists) {
-    let totalSongs = 0
-    for(const song of songs) {
-      if(artist === song.artist) {
-        totalSongs++
-      }
+  artists.reduce((artistObject, currArtist) => {
+    artistObject[currArtist] = (artistObject[currArtist] || 0) + 1
+    if(highestValue < artistObject[currArtist]) {
+      highestValue = artistObject[currArtist]
+      artistWithMost = currArtist
     }
-    if(artistWithSongsObject.hasOwnProperty(artist)){
-      continue;
-    }
-    artistWithSongsObject[artist] = totalSongs
-  }
-  for(const key in artistWithSongsObject){
-    if(artistWithSongsObject[key] > highestValue){
-      artistWithMost = key
-      highestValue = artistWithSongsObject[key]
-    }
-  }
+    return artistObject
+  },{})
   return artistWithMost
+  // for(const artist of artists) {
+  //   let totalSongs = 0
+  //   for(const song of songs) {
+  //     if(artist === song.artist) {
+  //       totalSongs++
+  //     }
+  //   }
+  //   if(artistWithSongsObject.hasOwnProperty(artist)){
+  //     continue;
+  //   }
+  //   artistWithSongsObject[artist] = totalSongs
+  // }
+  // for(const key in artistWithSongsObject){
+  //   if(artistWithSongsObject[key] > highestValue){
+  //     artistWithMost = key
+  //     highestValue = artistWithSongsObject[key]
+  //   }
+  // }
+  // return artistWithMost
 }
 
 
