@@ -214,7 +214,7 @@ console.log(listAlbumTotalRuntimes(exampleSongData))
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
 function findFirstSongStartingWith(songs, letter) {
-  const firstSongWithLetter = songs.find(song => song.title[0] === letter);
+  const firstSongWithLetter = songs.find(song => song.title[0] === letter || null);
   return firstSongWithLetter
 };
 
@@ -226,7 +226,21 @@ console.log(findFirstSongStartingWith(exampleSongData, "U") )
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
-function mapArtistsToSongs(songs) {}
+function mapArtistsToSongs(songs) {
+let artistMap ={};
+
+  songs.map(song => {
+   if(!artistMap.hasOwnProperty(song.artist)){
+    artistMap[song.artist] = [song.title]
+   }
+   else {
+    artistMap[song.artist].push(song.title);
+   }
+  })
+  return artistMap;
+}
+
+mapArtistsToSongs(exampleSongData)
 
 // Problem #17
 /**
@@ -241,7 +255,11 @@ function findAlbumWithLongestAverageRuntime(songs) {}
  * Logs song titles sorted by their runtime.
  * @param {Object[]} songs - An array of songs.
  */
-function printSongsSortedByRuntime(songs) {}
+function printSongsSortedByRuntime(songs) {
+  let songsSortedByRunTime = songs.sort((songA, songB) => songA.runtimeInSeconds - songB.runtimeInSeconds);
+  songsSortedByRunTime.forEach(song => console.log(song.title))
+  
+}
 
 // Problem #19
 /**
