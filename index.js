@@ -25,13 +25,7 @@ function getSortedTitles(songs) {
  * @returns {string[]} An array of song titles.
  */
 function getSongsFromAlbum(songs, albumName) {
-  let newArr = [];
-  for(let i = 0; i < songs.length; i++){
-    if(songs[i].album === albumName){
-      newArr.push(songs[i].title)
-    }
-  }
-  return newArr
+  return  songs.map(song => song.album === albumName ? song.title : "").filter(Boolean)
 }
 
 
@@ -116,7 +110,6 @@ function getSongsWithDurationInMinutes(songs) {
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
 function getAlbumsInReverseOrder(songs) {
-  // ! This mpas the albums in to its own array then its sorts the album names in reverse order 
   let array = songs.map(song => song.album).sort((a, b) => {
     if(a > b) {
       return -1
@@ -136,7 +129,7 @@ function getAlbumsInReverseOrder(songs) {
  * @returns {string[]} An array of song titles containing the word.
  */
 function songsWithWord(songs, word) {
-  return songs.filter(song => song.title.includes("Berlin")).map(song => song.title);
+  return songs.filter(song => song.title.includes(word)).map(song => song.title);
 }
 
 

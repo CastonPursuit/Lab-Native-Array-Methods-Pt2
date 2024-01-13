@@ -1,11 +1,6 @@
 const exampleSongData = require("./data/songs");
 
-function getSongsWithDurationInMinutes(songs) {
-  songs.forEach(song => song["durationInMinutes"] = song.runtimeInSeconds / 60)
-  return songs
-  // for(let i = 0; i < songs.length; i++) {
-  //   songs[i].durationInMinutes = songs[i].runtimeInSeconds / 60
-  // }
-  // return songs;
+function getSongsFromAlbum(songs, albumName) {
+  return  songs.map(song => song.album === albumName ? song.title : "").filter(Boolean)
 }
-  console.log(getSongsWithDurationInMinutes(exampleSongData))
+  console.log(getSongsFromAlbum(exampleSongData,"Seasonal Sounds"))
