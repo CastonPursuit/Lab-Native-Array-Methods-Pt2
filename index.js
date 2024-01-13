@@ -110,15 +110,15 @@ function getSongsWithDurationInMinutes(songs) {
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
 function getAlbumsInReverseOrder(songs) {
-  let array = songs.map(song => song.album).sort((a, b) => {
+  let albumArray = songs.map(song => song.album).sort((a, b) => {
     if(a > b) {
       return -1
     }else {
       return 1
     }
   });
-  return array.filter((item, 
-    index) => array.indexOf(item) === index)
+  return albumArray.filter((album, 
+    index) => albumArray.indexOf(album) === index)
 }
 
 // #9
@@ -266,32 +266,27 @@ function mapArtistsToSongs(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the longest average song runtime.
  */
+// object[song.album] = (object[song.album] || r) += song.runtimeInSeconds && object[song.album].songCount++
+
 function findAlbumWithLongestAverageRuntime(songs) {
-  const albums = songs.map(song => song.album)
-  let mappedObject = {};
-  let longest = 0
+  let longestAvg = 0
   let albumName = ""
-  for(const album of albums) {
-    const arr = []
-    for(const song of songs) {
-      if(album === song.album) {
-        arr.push(song.runtimeInSeconds)
+  let mappedObject = songs.reduce((object, song) => {
+    if(!object[song.album]){
+      object[song.album] = {
+        runtimes: song.runtimeInSeconds,
+        songCount: 1
       }
+    }else {
+      object[song.album].runtimes += song.runtimeInSeconds
+      object[song.album].songCount++
     }
-    mappedObject[album] = (mappedObject[album] ||arr)
-  }
-  for(const album in mappedObject){
-    let total = 0
-    let songAmount = 0
-    for(const time of mappedObject[album]) {
-      total += time
-      songAmount++ 
-    }
-    mappedObject[album] = Math.round(total / songAmount)
-  }
+    return object
+  },{})
   for(const album in mappedObject) {
-    if(mappedObject[album] > longest) {
-      longest = mappedObject[album]
+    let average = mappedObject[album].runtimes / mappedObject[album].songCount
+    if(average > longestAvg) {
+      longestAvg = average
       albumName = album
     }
   }
