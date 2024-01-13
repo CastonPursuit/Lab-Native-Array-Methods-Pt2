@@ -127,7 +127,6 @@ function getSongsWithDurationInMinutes(songs) {
 function getAlbumsInReverseOrder(songs) {
   return songs.map(x => x.album).filter((val, index) => songs.indexOf(val) === index).sort((a, b) => b.localeCompare(a));
 }
-
 // #9
 /**
  * Returns a list of song titles that contain a specific word.
@@ -215,12 +214,8 @@ function listAlbumTotalRuntimes(songs) {
  * @param {string} letter - The letter to search for.
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
-// function findFirstSongStartingWith(songs, letter) {
-//   return songs.find(x => x.title.startsWith(letter));
-// }
-
 function findFirstSongStartingWith(songs, letter) {
-  return songs.find(x => x.title[0].startsWith(letter));
+  return songs.find(x => x.title[0].startsWith(letter)) || null;
 }
 
 // Problem #16
@@ -229,30 +224,20 @@ function findFirstSongStartingWith(songs, letter) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
+//  SOLUTION
 function mapArtistsToSongs(songs) {
-  return songs.forEach(x => {
-    let artist = x.artist;
-    let songTitles = songs.map(x => x.title)
-    return {
-      artist: x.artist,
-      songs: songTitles
+  let artistMap = {};
+
+  songs.map(song => {
+    if(!artistMap.hasOwnProperty(song.artist)){
+      artistMap[song.artist] = [];
+    }
+    else {
+      artistMap[song.artist].push(song.title);
     }
   })
+  return artistMap;
 }
-
-
-
-
-// function mapArtistsToSongs(songs) {
-//   return songs.forEach(x => {
-//     let artist = x.artist;
-//     let songTitles = songs.map(x => x.title)
-//     return {
-//       artist: x.artist,
-//       songs: songTitles
-//     }
-//   })
-// }
 
 // Problem #17
 /**
@@ -270,8 +255,12 @@ function findAlbumWithLongestAverageRuntime(songs) {
  * Logs song titles sorted by their runtime.
  * @param {Object[]} songs - An array of songs.
  */
+// function printSongsSortedByRuntime(songs) {
+//   console.log(songs.map(x => x.title).sort((a, b) => a.runtimeInSeconds - b.runtimeInSeconds)[0]);
+// }
 function printSongsSortedByRuntime(songs) {
-  console.log(songs.map(x => x.title).sort((a, b) => a.runtimeInSeconds - b.runtimeInSeconds)[0]);
+  let songsSortedByRuntime = songs.sort((songA, songB) => songA.runtimeInSeconds - songB.runtimeInSeconds);
+  songsSortedByRuntime.forEach(song => console.log(song.title))
 }
 
 // Problem #19
@@ -280,16 +269,39 @@ function printSongsSortedByRuntime(songs) {
  * @param {Object[]} songs - An array of songs.
  */
 function printAlbumSummaries(songs) {
-  // return songs.forEach(x => {
-  //   let totalRuntime = songs.forEach(song => ...?...);
-
-  //   return {
-  //     name: x.name,
-  //     totalRuntime: totalRuntime,
-  //     numberOfSongs : numberOfSongs
-  //   }
-  // })
+  let albumSummaries = {};
+  songs.forEach(song => {
+    if (!albumSummaries[song.album]) {
+      albumSummaries[song.album] = {
+        albumName: song.album,
+        songCount: 1,
+        totalRuntime: song.runtimeInSeconds
+      };
+    } else {
+      albumSummaries[song.album].songCount++
+      albumSummaries[song.album].totalRuntime += song.runtimeInSeconds;
+    }
+  });
+  for (const summary of albumSummaries) {
+    console.log(summary);
+  }
 }
+
+
+
+
+
+// function printAlbumSummaries(songs) {
+//   // return songs.forEach(x => {
+//   //   let totalRuntime = songs.forEach(song => ...?...);
+
+//   //   return {
+//   //     name: x.name,
+//   //     totalRuntime: totalRuntime,
+//   //     numberOfSongs : numberOfSongs
+//   //   }
+//   // })
+// }
 
 // Problem #20
 /**
