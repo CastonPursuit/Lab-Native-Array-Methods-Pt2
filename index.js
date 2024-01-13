@@ -25,7 +25,7 @@ function getSortedTitles(songs) {
  * @returns {string[]} An array of song titles.
  */
 function getSongsFromAlbum(songs, albumName) {
-  return  songs.map(song => song.album === albumName ? song.title : "").filter(Boolean)
+  return  songs.map(song => song.album === albumName ? song.title : null).filter(Boolean)
 }
 
 
