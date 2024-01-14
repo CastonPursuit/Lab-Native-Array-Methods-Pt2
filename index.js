@@ -271,7 +271,7 @@ function mapArtistsToSongs(songs) {
 function findAlbumWithLongestAverageRuntime(songs) {
   let longestAvg = 0
   let albumName = ""
-  let mappedObject = songs.reduce((object, song) => {
+  songs.reduce((object, song) => {
     if(!object[song.album]){
       object[song.album] = {
         runtimes: song.runtimeInSeconds,
@@ -281,15 +281,13 @@ function findAlbumWithLongestAverageRuntime(songs) {
       object[song.album].runtimes += song.runtimeInSeconds
       object[song.album].songCount++
     }
-    return object
-  },{})
-  for(const album in mappedObject) {
-    let average = mappedObject[album].runtimes / mappedObject[album].songCount
+    let average = object[song.album].runtimes / object[song.album].songCount
     if(average > longestAvg) {
       longestAvg = average
-      albumName = album
+      albumName = song.album
     }
-  }
+    return object
+  },{})
   return albumName
 }
 
