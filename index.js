@@ -90,7 +90,7 @@ function findAlbumWithMostSongs(songs) {
   let maxSongs = 0;
   let albumWithMostSongs;
 
-  // Iterate through albumSongCount to find the album with the most songs
+  
   for (const album in albumSongCount) {
     if (albumSongCount[album] > maxSongs) {
       maxSongs = albumSongCount[album];
@@ -132,7 +132,14 @@ function getFirstSongInAlbum(songs, albumName) {
  * @param {number} runtime - The runtime to check against in seconds.
  * @returns {boolean} True if there is at least one song longer than the runtime.
  */
-function isThereLongSong(songs, runtime) {}
+function isThereLongSong(songs, runtime) {
+   let longSongs = songs.some(song => {
+    if(song.runtimeInSeconds > runtime ){
+      return true;
+    }
+  })
+   return longSongs;
+} console.log(isThereLongSong(exampleSongData))
 
 // #7
 /**
@@ -148,7 +155,27 @@ function getSongsWithDurationInMinutes(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
-function getAlbumsInReverseOrder(songs) {}
+
+function getAlbumsInReverseOrder(songs) {
+  let newSarr = [];
+  let reversedAlbums = songs.map(song => song.album).sort().reverse();
+
+  reversedAlbums.forEach(song => {
+    if (!newSarr.includes(song)) {
+      newSarr.push(song);
+    }
+  });
+
+  //console.log(newSarr);
+  return newSarr;
+}
+
+// Assuming exampleSongData is defined somewhere in your code
+getAlbumsInReverseOrder(exampleSongData);
+
+
+
+  
 
 // #9
 /**
@@ -157,7 +184,20 @@ function getAlbumsInReverseOrder(songs) {}
  * @param {string} word - The word to search for in song titles.
  * @returns {string[]} An array of song titles containing the word.
  */
-function songsWithWord(songs, word) {}
+function songsWithWord(songs, word) {
+ let arrWords = []
+ 
+songs.forEach(song => {
+  if (song.title.includes(word)){
+    arrWords.push(song.title)
+  }
+ 
+ });
+
+ console.log(arrWords)
+ return arrWords;
+}
+  
 
 // #10
 /**
@@ -166,7 +206,26 @@ function songsWithWord(songs, word) {}
  * @param {string} artistName - Name of the artist.
  * @returns {number} Total runtime in seconds.
  */
-function getTotalRuntimeOfArtist(songs, artistName) {}
+function getTotalRuntimeOfArtist(songs, artistName) {
+  let artistSongs=[];
+  let sum = 0;
+//declared the sum since i knew i'd have to return a number 
+//created artist songs to push mrun times in to assign to sum and add up.
+  songs
+       .filter(song => song.artist === artistName)
+       .forEach(song => {
+         artistSongs.push(song.runtimeInSeconds);
+         sum += artistSongs;
+        });
+
+
+        
+        return Number(sum);
+        
+      }console.log(getTotalRuntimeOfArtist(exampleSongData));
+
+
+
 
 // Problem #11
 /**
