@@ -198,14 +198,6 @@ function listAlbumTotalRuntimes(songs) {
 
 }
 
-// function listAlbumTotalRuntimes(songs) {
-//   // let albumTotalRuntimes = {};
-//   // songs.forEach(x => {
-//   //   if ()
-//   // })
-//   // return albumTotalRuntimes;
-// }
-
 
 // Problem #15
 /**
@@ -224,13 +216,12 @@ function findFirstSongStartingWith(songs, letter) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
-//  SOLUTION
 function mapArtistsToSongs(songs) {
   let artistMap = {};
 
   songs.map(song => {
     if(!artistMap.hasOwnProperty(song.artist)){
-      artistMap[song.artist] = [];
+      artistMap[song.artist] = [song.title];
     }
     else {
       artistMap[song.artist].push(song.title);
@@ -264,44 +255,29 @@ function printSongsSortedByRuntime(songs) {
 }
 
 // Problem #19
-/**
+/*
  * Prints a summary of each album, including its name, total runtime, and number of songs.
  * @param {Object[]} songs - An array of songs.
  */
 function printAlbumSummaries(songs) {
   let albumSummaries = {};
-  songs.forEach(song => {
+  songs.forEach((song) => {
     if (!albumSummaries[song.album]) {
       albumSummaries[song.album] = {
-        albumName: song.album,
         songCount: 1,
-        totalRuntime: song.runtimeInSeconds
+        totalRuntime: song.runtimeInSeconds,
       };
     } else {
-      albumSummaries[song.album].songCount++
+      albumSummaries[song.album].songCount++;
       albumSummaries[song.album].totalRuntime += song.runtimeInSeconds;
     }
   });
-  for (const summary of albumSummaries) {
-    console.log(summary);
+  for (const summary in albumSummaries) {
+    console.log(
+      `${summary}: ${albumSummaries[summary].songCount} songs, Total Runtime: ${albumSummaries[summary].totalRuntime} seconds`
+    );
   }
 }
-
-
-
-
-
-// function printAlbumSummaries(songs) {
-//   // return songs.forEach(x => {
-//   //   let totalRuntime = songs.forEach(song => ...?...);
-
-//   //   return {
-//   //     name: x.name,
-//   //     totalRuntime: totalRuntime,
-//   //     numberOfSongs : numberOfSongs
-//   //   }
-//   // })
-// }
 
 // Problem #20
 /**
