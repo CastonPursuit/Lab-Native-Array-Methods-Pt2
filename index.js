@@ -288,7 +288,7 @@ function findAlbumWithLongestAverageRuntime(songs) {
     }
     return object
   },{})
-  return albumName
+  return albumName;
 }
 
 // Problem #18
