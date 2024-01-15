@@ -246,7 +246,28 @@ function mapArtistsToSongs(songs) {
  * @returns {string} The name of the album with the longest average song runtime.
  */
 function findAlbumWithLongestAverageRuntime(songs) {
+  const albumAverageRuntime = {};
+  let albumName = "";
+  let longestAvgRuntime = 0;
 
+  songs.forEach((song) => {
+    if (!albumAverageRuntime[song.album]) {
+      albumAverageRuntime[song.album] = {
+        totalRuntime: song.runtimeInSeconds,
+        songCount: 1,
+        avgRuntime: song.runtimeInSeconds
+      };
+    } else {
+      albumAverageRuntime[song.album].totalRuntime += song.runtimeInSeconds;
+      albumAverageRuntime[song.album].songCount++;
+      albumAverageRuntime[song.album].avgRuntime = Number(albumAverageRuntime[song.album].totalRuntime / albumAverageRuntime[song.album].songCount).toFixed(2);
+    }
+    if (albumAverageRuntime[song.album].avgRuntime > longestAvgRuntime) {
+      longestAvgRuntime = albumAverageRuntime[song.album].avgRuntime;
+      albumName = song.album;
+    }
+  })
+  return albumName;
 }
 
 // Problem #18
