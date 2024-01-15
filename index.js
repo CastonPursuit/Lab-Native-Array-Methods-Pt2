@@ -17,7 +17,7 @@ function getSortedTitles(songs) {
   return songs.map(x => x.title).sort()
 }
 
-console.log(getSortedTitles(exampleSongData))
+// console.log(getSortedTitles(exampleSongData))
 
 // #2
 /**
@@ -194,8 +194,17 @@ function sortSongsByArtistAndTitle(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each album to its total runtime.
  */
-function listAlbumTotalRuntimes(songs) {
 
+function listAlbumTotalRuntimes(songs) {
+  let albumTotalRuntime = {};
+  songs.forEach(song => {
+    if (!albumTotalRuntime[song.album]) {
+      albumTotalRuntime[song.album] = song.runtimeInSeconds;
+    } else {
+      albumTotalRuntime[song.album] += song.runtimeInSeconds
+    }
+  })
+  return albumTotalRuntime;
 }
 
 
@@ -237,8 +246,7 @@ function mapArtistsToSongs(songs) {
  * @returns {string} The name of the album with the longest average song runtime.
  */
 function findAlbumWithLongestAverageRuntime(songs) {
-  //need to find avg runtime of each album!
-  return songs.map(x => x.album).sort((a, b) => b.runtimeInSeconds - a.runtimeInSeconds)[0];
+
 }
 
 // Problem #18
