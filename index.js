@@ -172,11 +172,9 @@ function printArtistsWithMultipleSongs(songs) {
  * @param {Object[]} songs - An array of songs.
  */
 function printLongestSongTitle(songs) {
-  let longestSongTitle = songs.sort((a, b) => b.title.length - a.title.length)[0].title;
-  return longestSongTitle;
+  console.log(songs.sort((a, b) => b.title.length - a.title.length)[0].title);
 }
 
-console.log(printLongestSongTitle(exampleSongData))
 
 // Problem #13
 /**
@@ -185,7 +183,7 @@ console.log(printLongestSongTitle(exampleSongData))
  * @returns {Object[]} Sorted array of songs.
  */
 function sortSongsByArtistAndTitle(songs) {
-  return songs.sort((a, b) => a.artist.localeCompare(b.artist) || a.title.localeCompare(b.title));
+  return songs.sort((a, b) => a.artist.localeCompare(b.artist).sort((a,b) => a.title.localeCompare(b.title)));
 }
 
 // Problem #14
@@ -315,7 +313,23 @@ function printAlbumSummaries(songs) {
  * @returns {string} The name of the artist with the most songs.
  */
 function findArtistWithMostSongs(songs) {
+  let artistWithTheMostSongs = {};
+  let songCount = 1;
+  let highestSongCount = 0;
+  let artistName = "";
 
+  songs.forEach(song => {
+    if (!artistWithTheMostSongs[song.artist]) {
+      artistWithTheMostSongs[song.artist] = songCount;
+    } else {
+      artistWithTheMostSongs[song.artist]++;
+    }
+    if (artistWithTheMostSongs[song.artist].songCount > highestSongCount) {
+      highestSongCount = artistWithTheMostSongs[song.artist].songCount;
+    }
+    artistName = song.artist;
+  })
+  return artistName
 }
 
 
