@@ -60,25 +60,25 @@ function categorizeSongsByRuntime(songs) {
  * @returns {string} The name of the album with the most songs.
  */
 function findAlbumWithMostSongs(songs) {
-  // const albumWithMost = songs.reduce((acc,song) => {
-  //    if (acc[song.album]) {
-  //     acc[song.album]++
-  //    } else {
-  //     acc[song.album] = 1
-  //    }
-  //    return acc
+  const albumWithMost = songs.reduce((acc,song) => {
+     if (acc[song.album]) {
+      acc[song.album]++
+     } else {
+      acc[song.album] = 1
+     }
+     return acc
   
-  //   }, {});
+    }, {});
     
-  //   let count = 0
-  //   let result = ''
-  //   for (const song in albumWithMost) {
-  //     if(albumWithMost[song] > count) {
-  //       count = albumWithMost[song]++
-  //       result = song.album
-  //   }
-  //   return result
-  // }
+    let count = 0
+    let result = ''
+    for (const song in albumWithMost) {
+      if(albumWithMost[song] > count) {
+        count = albumWithMost[song]++
+        result = song.album
+    }
+    return result
+  }
 }
 
 
@@ -113,14 +113,12 @@ function isThereLongSong(songs, runtime) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Array of song objects with runtime in minutes.
  */
-  function getSongsWithDurationInMinutes(songs) {
-    return songs.map(song => {
-      return {
-        title: song.title,
-        durationInMinutes: song.runtimeInSeconds / 60
-      };
-    });
-  }
+function getSongsWithDurationInMinutes(songs) {
+  return songs.map(song => ({
+    title: song.title,
+    durationInMinutes: song.runtimeInSeconds / 60
+  }));
+}
 
 // #8
 /**
@@ -128,7 +126,17 @@ function isThereLongSong(songs, runtime) {
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
-function getAlbumsInReverseOrder(songs) {}
+function getAlbumsInReverseOrder(songs) {
+ return songs.map(song => song.album).sort((b,a) => {
+    if (a>b) {
+      return -1;
+    } else if (b>a) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+}
 
 // #9
 /**
@@ -137,7 +145,11 @@ function getAlbumsInReverseOrder(songs) {}
  * @param {string} word - The word to search for in song titles.
  * @returns {string[]} An array of song titles containing the word.
  */
-function songsWithWord(songs, word) {}
+function songsWithWord(songs, word) {
+  let listOfSongs = songs.filter(song => song.title.includes(word));
+  let songTitles = listOfSongs.map(song => song.title);
+  return songTitles;
+}
 
 // #10
 /**
@@ -146,14 +158,29 @@ function songsWithWord(songs, word) {}
  * @param {string} artistName - Name of the artist.
  * @returns {number} Total runtime in seconds.
  */
-function getTotalRuntimeOfArtist(songs, artistName) {}
+function getTotalRuntimeOfArtist(songs, artistName) {
+ let songsByArtist = songs.filter(song => song.artist === artistName);
+ let runtimeCount = 0
+ for (let i = 0; i < songsByArtist.length; i++) {
+  runtimeCount += songsByArtist[i].runtimeInSeconds
+ } 
+ return runtimeCount
+}
 
 // Problem #11
 /**
  * Prints artists who have more than one song in the list.
  * @param {Object[]} songs - An array of songs.
  */
-function printArtistsWithMultipleSongs(songs) {}
+function printArtistsWithMultipleSongs(songs) {
+  let artists = songs.map(song => song.artist);
+
+  for (let i = 0; i < artists.length; i++) {
+    if (artists.indexOf(artists[i]) !== artists.lastIndexOf(artists[i])) {
+      console.log(artists[i]);
+    }
+  }
+}
 
 // Problem #12
 /**
