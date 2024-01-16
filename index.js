@@ -105,7 +105,7 @@ function findAlbumWithMostSongs(songs) {
  */
 function getFirstSongInAlbum(songs, albumName) {
   let newAlbumListing = [];
-
+// song filters through the albumName to provide an array of songs 
   let songsByAlbum = songs.filter((song) => song.album === albumName);
 
   newAlbumListing = songsByAlbum.sort((songA, songB) => songA.title.localeCompare(songB.title));
@@ -123,7 +123,7 @@ function getFirstSongInAlbum(songs, albumName) {
  * @returns {boolean} True if there is at least one song longer than the runtime.
  */
 function isThereLongSong(songs, runtime) { 
-
+// it iterates through a songs to find the if there is a song greater than the runtime specified in the parameter
    return songs.some(song => song.runtimeInSeconds > runtime ) 
 }
 
@@ -133,9 +133,11 @@ function isThereLongSong(songs, runtime) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Array of song objects with runtime in minutes.
  */
-function getSongsWithDurationInMinutes(songs) { 
+function getSongsWithDurationInMinutes(songs) {
+  // changes entire data of songs with the new  output with seconds to minutes.
+    songs.forEach((song) => song['durationInMinutes'] = song.runtimeInSeconds / 60 ) 
+   return songs;
 
-  
 }
 
 // #8
@@ -146,9 +148,14 @@ function getSongsWithDurationInMinutes(songs) {
  */
 function getAlbumsInReverseOrder(songs) {
 
-  return 
-}
+  const allAlbumsNoRepeats = new Set();
 
+  songs.forEach(songAlbums => {
+    allAlbumsNoRepeats.add(songAlbums.album);
+  });
+
+  return Array.from(allAlbumsNoRepeats).sort((firstAlbum, lastAlbum) => lastAlbum.localeCompare(firstAlbum))
+}
 // #9
 /**
  * Returns a list of song titles that contain a specific word.

@@ -32,17 +32,28 @@ const exampleSongData = require("./data/songs");
 // }
 // console.log(getFirstSongInAlbum(exampleSongData,"Bluewerks Vol. 1: Up Down Left Right"))  
 
-function getSongsWithDurationInMinutes(songs) { 
+// function getSongsWithDurationInMinutes(songs) { 
 
-    let transformedSong = []
-    let minutes = 0
-    let songName = songs.title
-    
-    for ( let i = 0; i < songs.length; i++) {
-      if (Math.floor(songs.runtimeInSeconds)) {
-      songName.push()
-      }
-    }
-    
-    
-    }
+//     songs.forEach((song) => 
+//       song['durationInMinutes'] = song.runtimeInSeconds / 60
+//     ) 
+ 
+//     return songs;
+//  }
+ 
+
+//   console.log(getSongsWithDurationInMinutes(exampleSongData))
+
+function getAlbumsInReverseOrder(songs) {
+
+    const allAlbumsNoRepeats = new Set();
+
+    songs.forEach(songAlbums => {
+      allAlbumsNoRepeats.add(songAlbums.album);
+    });
+  
+    return Array.from(allAlbumsNoRepeats).sort((firstAlbum, lastAlbum) => lastAlbum.localeCompare(firstAlbum))
+  
+}
+
+console.log(getAlbumsInReverseOrder(exampleSongData))
