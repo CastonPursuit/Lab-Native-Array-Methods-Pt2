@@ -248,7 +248,35 @@ mapArtistsToSongs(exampleSongData)
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the longest average song runtime.
  */
-function findAlbumWithLongestAverageRuntime(songs) {}
+function findAlbumWithLongestAverageRuntime(songs) {
+  const albumAverageRuntime = {};
+  let albumName = '';
+  let longestAvgRuntime = 0;
+  
+
+  songs.forEach(song => {
+    if(!albumAverageRuntime[song.album]){
+      albumAverageRuntime[song.album] = {
+        totalRunTime: song.runtimeInSeconds, 
+        songCount: 1, 
+        avgRuntime: song.runtimeInSeconds,
+      };
+    } else {
+      albumAverageRuntime[song.album].totalRunTime += song.runtimeInSeconds;
+      albumAverageRuntime[song.album].songCount++;
+      albumAverageRuntime[song.album].avgRuntime = +(albumAverageRuntime[song.album].totalRunTime / albumAverageRuntime[song.album].songCount).toFixed(2)
+    }
+    if(albumAverageRuntime[song.album].avgRuntime > longestAvgRuntime){
+      longestAvgRuntime = albumAverageRuntime[song.album].avgRuntime;
+      albumName = song.album;
+    }
+
+  });
+  return albumName;
+}
+
+console.log(findAlbumWithLongestAverageRuntime(exampleSongData))
+
 
 // Problem #18
 /**
@@ -266,7 +294,24 @@ function printSongsSortedByRuntime(songs) {
  * Prints a summary of each album, including its name, total runtime, and number of songs.
  * @param {Object[]} songs - An array of songs.
  */
-function printAlbumSummaries(songs) {}
+function printAlbumSummaries(songs) {
+  let albumSummaries = {};
+  songs.forEach((song) => {
+    if(!albumSummaries[song.album]){
+      albumSummaries[song.album] = {
+        songCount: 1, 
+        totalRunTime: song.runtimeInSeconds,
+      };
+    } else{
+      albumSummaries[song.album].songCount++;
+      albumSummaries[song.album].totalRunTime += song.runtimeInSeconds;
+    }
+  });
+  for(const summary in albumSummaries){
+    console.log(`${summary}: ${albumSummaries[summary].songCount} songs, Total Runtime: ${albumSummaries[summary].totalRunTime} seconds`);
+  }
+}
+console.log(printAlbumSummaries(exampleSongData))
 
 // Problem #20
 /**
