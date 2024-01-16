@@ -155,15 +155,18 @@ function getTotalRuntimeOfArtist(songs, artistName) {
  * @param {Object[]} songs - An array of songs.
  */
 function printArtistsWithMultipleSongs(songs) {
-  // let artistWithTheMostSongs = {};
-  // return songs.forEach(song => {
-  //   if (artistWithTheMostSongs[song.artist]) {
-  //     artistWithTheMostSongs[song.artist]
-  //   } else {
-  //     artistWithTheMostSongs[song.artist] += artistWithTheMostSongs[song.artist]
-  //   }
-  // })
-  // console.log(artistWithTheMostSongs);
+  let artistsWithMultipleSongs = {};
+  let songCount = 1;
+
+  songs.forEach(song => {
+    if (!artistsWithMultipleSongs[song.artist]) {
+      artistsWithMultipleSongs[song.artist] = songCount;
+    } else {
+      artistsWithMultipleSongs[song.artist]++;
+    }
+    return artistsWithMultipleSongs[song.artist]
+  })
+  console.log(printArtistsWithMultipleSongs(exampleSongData));
 }
 
 // Problem #12
