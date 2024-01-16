@@ -13,7 +13,10 @@ const exampleSongData = require("./data/songs");
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Sorted song titles.
  */
-function getSortedTitles(songs) {}
+function getSortedTitles(songs) {
+  return songs.map(song => song.title).sort();
+}
+
 
 // #2
 /**
@@ -22,7 +25,9 @@ function getSortedTitles(songs) {}
  * @param {string} albumName - Name of the album.
  * @returns {string[]} An array of song titles.
  */
-function getSongsFromAlbum(songs, albumName) {}
+function getSongsFromAlbum(songs, albumName) {
+  return songs.filter(songByAlbum => songByAlbum.album === albumName).map(songArr => songArr.title)
+}
 
 // #3 
 /**
@@ -30,7 +35,23 @@ function getSongsFromAlbum(songs, albumName) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
-function categorizeSongsByRuntime(songs) {}
+function categorizeSongsByRuntime(songs) {
+  const songLength = {shortSongs: 0 , mediumSongs: 0,longSongs: 0 }
+ 
+  songs.forEach(song => {
+  if (song.runtimeInSeconds < 180){
+   songLength.shortSongs++
+  } else if (song.runtimeInSeconds >= 180 && song.runtimeInSeconds < 240){
+    songLength.mediumSongs++
+  } else {
+    songLength.longSongs++
+  }
+  })
+
+  return songLength
+
+
+}
 
 // #4
 /**
@@ -38,7 +59,28 @@ function categorizeSongsByRuntime(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the most songs.
  */
-function findAlbumWithMostSongs(songs) {}
+function findAlbumWithMostSongs(songs) {
+  const albumWithMost = songs.reduce((acc,song) => {
+     if (acc[song.album]) {
+      acc[song.album]++
+     } else {
+      acc[song.album] = 1
+     }
+     return acc
+  
+    }, {});
+    
+    let count = 0
+    let result = ''
+    for (const song in albumWithMost) {
+      if(albumWithMost[song] > count) {
+        count = albumWithMost[song]++
+        result = song.album
+    }
+    return result
+  }
+}
+
 
 // #5
 /**
@@ -47,7 +89,10 @@ function findAlbumWithMostSongs(songs) {}
  * @param {string} albumName - Name of the album.
  * @returns {Object|null} First song object in the album or null.
  */
-function getFirstSongInAlbum(songs, albumName) {}
+function getFirstSongInAlbum(songs, albumName) {
+  const findFirstSong = songs.find(song => song.album === albumName);
+  return findFirstSong || null ;
+}
 
 // #6
 /**
@@ -56,7 +101,11 @@ function getFirstSongInAlbum(songs, albumName) {}
  * @param {number} runtime - The runtime to check against in seconds.
  * @returns {boolean} True if there is at least one song longer than the runtime.
  */
-function isThereLongSong(songs, runtime) {}
+function isThereLongSong(songs, runtime) {
+ if (songs.some(song => song.runtimeInSeconds > runtime)){
+  return true
+ };
+}
 
 // #7
 /**
@@ -64,7 +113,12 @@ function isThereLongSong(songs, runtime) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Array of song objects with runtime in minutes.
  */
-function getSongsWithDurationInMinutes(songs) {}
+function getSongsWithDurationInMinutes(songs) {
+  return songs.map(song => ({
+    title: song.title,
+    durationInMinutes: song.runtimeInSeconds / 60
+  }));
+}
 
 // #8
 /**
@@ -72,7 +126,17 @@ function getSongsWithDurationInMinutes(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Array of album names in reverse alphabetical order.
  */
-function getAlbumsInReverseOrder(songs) {}
+function getAlbumsInReverseOrder(songs) {
+ return songs.map(song => song.album).sort((b,a) => {
+    if (a>b) {
+      return -1;
+    } else if (b>a) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+}
 
 // #9
 /**
@@ -81,7 +145,11 @@ function getAlbumsInReverseOrder(songs) {}
  * @param {string} word - The word to search for in song titles.
  * @returns {string[]} An array of song titles containing the word.
  */
-function songsWithWord(songs, word) {}
+function songsWithWord(songs, word) {
+  let listOfSongs = songs.filter(song => song.title.includes(word));
+  let songTitles = listOfSongs.map(song => song.title);
+  return songTitles;
+}
 
 // #10
 /**
@@ -90,14 +158,29 @@ function songsWithWord(songs, word) {}
  * @param {string} artistName - Name of the artist.
  * @returns {number} Total runtime in seconds.
  */
-function getTotalRuntimeOfArtist(songs, artistName) {}
+function getTotalRuntimeOfArtist(songs, artistName) {
+ let songsByArtist = songs.filter(song => song.artist === artistName);
+ let runtimeCount = 0
+ for (let i = 0; i < songsByArtist.length; i++) {
+  runtimeCount += songsByArtist[i].runtimeInSeconds
+ } 
+ return runtimeCount
+}
 
 // Problem #11
 /**
  * Prints artists who have more than one song in the list.
  * @param {Object[]} songs - An array of songs.
  */
-function printArtistsWithMultipleSongs(songs) {}
+function printArtistsWithMultipleSongs(songs) {
+  let artists = songs.map(song => song.artist);
+
+  for (let i = 0; i < artists.length; i++) {
+    if (artists.indexOf(artists[i]) !== artists.lastIndexOf(artists[i])) {
+      console.log(artists[i]);
+    }
+  }
+}
 
 // Problem #12
 /**
@@ -131,13 +214,29 @@ function listAlbumTotalRuntimes(songs) {}
  */
 function findFirstSongStartingWith(songs, letter) {}
 
+
+
 // Problem #16
 /**
  * Maps each artist to an array of their song titles.
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
-function mapArtistsToSongs(songs) {}
+function mapArtistsToSongs(songs) {
+  let artistMap = {};
+  songs.map(song => {
+    if (!artistMap.hasOwnProperty(song.artist)){
+      artistMap[song.artist] = [song.title]
+    }
+    else {
+      artistMap[song.artist].push(song.title)
+    }
+  })
+  
+  return artistMap
+
+}
+
 
 // Problem #17
 /**
@@ -145,14 +244,50 @@ function mapArtistsToSongs(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the longest average song runtime.
  */
+
+
 function findAlbumWithLongestAverageRuntime(songs) {}
+//   const albumAverageRuntime = {};
+//    let albumName = ''
+//    let longestAvgRuntime = 0
+
+//    songs.forEach(song => {
+//     if (!albumAverageRuntime[song.album]) {
+//       albumAverageRuntime[song.album] = {
+//         totalrunTime: song.runtimeInSeconds, 
+//         songCount: 1, 
+//         avgRuntime: runtimeInSeconds,
+//       };
+//     } else {
+//       albumAverageRuntime[song.album].totalrunTime += song.runtimeInSeconds;
+//       albumAverageRuntime[song.album].songCount++;
+//       albumAverageRuntime[song.album] = avgRuntime +(
+//         albumAverageRuntime[song.album].totalrunTime /
+//         albumAverageRuntime[song.album].songCount
+//       )
+//     }
+//     if (albumAverageRuntime[song.album].avgRuntime > longestAvgRuntime) {
+//       longestAvgRuntime = albumAverageRuntime[song.album].avgRuntime;
+//       albumName = song.album
+//     }
+//   });
+//     
+//     return avgRuntime.albumName
+
+// }
+
 
 // Problem #18
 /**
  * Logs song titles sorted by their runtime.
  * @param {Object[]} songs - An array of songs.
  */
-function printSongsSortedByRuntime(songs) {}
+function printSongsSortedByRuntime(songs) {
+// let songsSortedByRuntime = songs.sort((songA,songB)=> songA.runtimeInSeconds - songB.runtimeInSeconds);
+
+// songsSortedByRuntime.forEach((song)=> console.log(song.title))
+
+}
 
 // Problem #19
 /**
