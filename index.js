@@ -13,7 +13,11 @@ const exampleSongData = require("./data/songs");
  * @param {Object[]} songs - An array of songs.
  * @returns {string[]} Sorted song titles.
  */
-function getSortedTitles(songs) {}
+function getSortedTitles(songs) {
+  return songs.map(x => x.title).sort();
+}
+
+console.log(getSortedTitles(exampleSongData));
 
 // #2
 /**
@@ -22,7 +26,10 @@ function getSortedTitles(songs) {}
  * @param {string} albumName - Name of the album.
  * @returns {string[]} An array of song titles.
  */
-function getSongsFromAlbum(songs, albumName) {}
+function getSongsFromAlbum(songs, albumName) {
+  return songs.filter(x => x.album === albumName).map(x => x.title);
+}
+console.log(getSongsFromAlbum(exampleSongData, 'Bi-To Te-Pu'))
 
 // #3 
 /**
@@ -30,7 +37,29 @@ function getSongsFromAlbum(songs, albumName) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object with counts of short, medium, and long songs.
  */
-function categorizeSongsByRuntime(songs) {}
+function categorizeSongsByRuntime(songs) {
+ return { 
+        longSongs: songs.filter(x => x.runtimeInSeconds > 220).length,
+        mediumSongs: songs.filter(x => x.runtimeInSeconds >= 180).length,
+        shortSongs: songs.filter(x => x.runtimeInSeconds < 180).length
+ };
+      };
+
+
+      // songs.forEach((song) => {
+      //   if (song.runtimeInSeconds < 180) {
+      //     runtimeCategorization.short++;
+      //   } else if (song.runtimeInSeconds >= 180 && song.runtimeInSeconds <= 300) {
+      //     runtimeCategorization.medium++;
+      //   } else if (song.runtimeInSeconds > 300) {
+      //     runtimeCategorization.long++;
+      //   }
+      // });
+
+
+
+
+console.log(categorizeSongsByRuntime(exampleSongData))
 
 // #4
 /**
@@ -38,7 +67,23 @@ function categorizeSongsByRuntime(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the most songs.
  */
-function findAlbumWithMostSongs(songs) {}
+function findAlbumWithMostSongs(songs) {
+  let highestSongCount = 0;
+  let albumWithMostSongs;
+
+  songs.reduce((songCountObj, currValue) => {
+  songCountObj[currValue.album] = (songCountObj[currValue.album] || 0) + 1;
+  if(songCountObj[currValue.album] > highestSongCount){
+    highestSongCount = songCountObj[currValue.album];
+    albumWithMostSongs = currValue.album
+  }
+  return songCountObj;
+}, {});
+
+return albumWithMostSongs;
+}
+
+console.log(findAlbumWithMostSongs(exampleSongData))
 
 // #5
 /**
@@ -47,7 +92,16 @@ function findAlbumWithMostSongs(songs) {}
  * @param {string} albumName - Name of the album.
  * @returns {Object|null} First song object in the album or null.
  */
-function getFirstSongInAlbum(songs, albumName) {}
+function getFirstSongInAlbum(songs, albumName) {
+ let getAlbumDetails = songs.find((x) => {
+  return {} === albumName
+ })
+ return getAlbumDetails;
+
+}
+
+
+
 
 // #6
 /**
@@ -56,7 +110,9 @@ function getFirstSongInAlbum(songs, albumName) {}
  * @param {number} runtime - The runtime to check against in seconds.
  * @returns {boolean} True if there is at least one song longer than the runtime.
  */
-function isThereLongSong(songs, runtime) {}
+function isThereLongSong(songs, runtime) {
+  Array.prototype.every.call(songs, (x) => typeof x.runtime < 400)
+}
 
 // #7
 /**
@@ -97,8 +153,22 @@ function getTotalRuntimeOfArtist(songs, artistName) {}
  * Prints artists who have more than one song in the list.
  * @param {Object[]} songs - An array of songs.
  */
-function printArtistsWithMultipleSongs(songs) {}
+function printArtistsWithMultipleSongs(songs) {
+  let artistSongCount = {};
+  songs.forEach((song) => {
+    if(artistSongCount[song.artist]){
+      artistSongCount[song.artist]++;
+    }else{
+      artistSongCount[song.artist] = 1;
+    }
+    if(artistSongCount[song.artist] > 1){
+      console.log(song.artist);
+    }
+    return artistSongCount;
+  });
+  }
 
+  console.log(printArtistsWithMultipleSongs(exampleSongData))
 // Problem #12
 /**
  * Logs the longest song title.
@@ -120,16 +190,35 @@ function sortSongsByArtistAndTitle(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each album to its total runtime.
  */
-function listAlbumTotalRuntimes(songs) {}
+function listAlbumTotalRuntimes(songs) {
+  let albumTotalRuntimes = {};
+
+  songs.forEach(song => {
+    if(albumTotalRuntimes[song.album]){
+      albumTotalRuntimes[song.album] += song.runtimeInSeconds;
+    }else {
+      albumTotalRuntimes[song.album] = song.runtimeInSeconds
+    }
+  })
+
+  return albumTotalRuntimes;
+}
+
+console.log(listAlbumTotalRuntimes(exampleSongData))
 
 // Problem #15
-/**
+/** 
  * Finds the first song with a title starting with a specific letter.
  * @param {Object[]} songs - An array of songs.
  * @param {string} letter - The letter to search for.
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
-function findFirstSongStartingWith(songs, letter) {}
+function findFirstSongStartingWith(songs, letter) {
+  const firstSongWithLetter = songs.find(song => song.title[0] === letter || null);
+  return firstSongWithLetter
+};
+
+console.log(findFirstSongStartingWith(exampleSongData, "U") )
 
 // Problem #16
 /**
@@ -137,7 +226,21 @@ function findFirstSongStartingWith(songs, letter) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each artist to an array of their song titles.
  */
-function mapArtistsToSongs(songs) {}
+function mapArtistsToSongs(songs) {
+let artistMap ={};
+
+  songs.map(song => {
+   if(!artistMap.hasOwnProperty(song.artist)){
+    artistMap[song.artist] = [song.title]
+   }
+   else {
+    artistMap[song.artist].push(song.title);
+   }
+  })
+  return artistMap;
+}
+
+mapArtistsToSongs(exampleSongData)
 
 // Problem #17
 /**
@@ -145,21 +248,70 @@ function mapArtistsToSongs(songs) {}
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the longest average song runtime.
  */
-function findAlbumWithLongestAverageRuntime(songs) {}
+function findAlbumWithLongestAverageRuntime(songs) {
+  const albumAverageRuntime = {};
+  let albumName = '';
+  let longestAvgRuntime = 0;
+  
+
+  songs.forEach(song => {
+    if(!albumAverageRuntime[song.album]){
+      albumAverageRuntime[song.album] = {
+        totalRunTime: song.runtimeInSeconds, 
+        songCount: 1, 
+        avgRuntime: song.runtimeInSeconds,
+      };
+    } else {
+      albumAverageRuntime[song.album].totalRunTime += song.runtimeInSeconds;
+      albumAverageRuntime[song.album].songCount++;
+      albumAverageRuntime[song.album].avgRuntime = +(albumAverageRuntime[song.album].totalRunTime / albumAverageRuntime[song.album].songCount).toFixed(2)
+    }
+    if(albumAverageRuntime[song.album].avgRuntime > longestAvgRuntime){
+      longestAvgRuntime = albumAverageRuntime[song.album].avgRuntime;
+      albumName = song.album;
+    }
+
+  });
+  return albumName;
+}
+
+console.log(findAlbumWithLongestAverageRuntime(exampleSongData))
+
 
 // Problem #18
 /**
  * Logs song titles sorted by their runtime.
  * @param {Object[]} songs - An array of songs.
  */
-function printSongsSortedByRuntime(songs) {}
+function printSongsSortedByRuntime(songs) {
+  let songsSortedByRunTime = songs.sort((songA, songB) => songA.runtimeInSeconds - songB.runtimeInSeconds);
+  songsSortedByRunTime.forEach(song => console.log(song.title))
+  
+}
 
 // Problem #19
 /**
  * Prints a summary of each album, including its name, total runtime, and number of songs.
  * @param {Object[]} songs - An array of songs.
  */
-function printAlbumSummaries(songs) {}
+function printAlbumSummaries(songs) {
+  let albumSummaries = {};
+  songs.forEach((song) => {
+    if(!albumSummaries[song.album]){
+      albumSummaries[song.album] = {
+        songCount: 1, 
+        totalRunTime: song.runtimeInSeconds,
+      };
+    } else{
+      albumSummaries[song.album].songCount++;
+      albumSummaries[song.album].totalRunTime += song.runtimeInSeconds;
+    }
+  });
+  for(const summary in albumSummaries){
+    console.log(`${summary}: ${albumSummaries[summary].songCount} songs, Total Runtime: ${albumSummaries[summary].totalRunTime} seconds`);
+  }
+}
+console.log(printAlbumSummaries(exampleSongData))
 
 // Problem #20
 /**
