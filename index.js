@@ -163,7 +163,18 @@ function getAlbumsInReverseOrder(songs) {
  * @param {string} word - The word to search for in song titles.
  * @returns {string[]} An array of song titles containing the word.
  */
-function songsWithWord(songs, word) {}
+function songsWithWord(songs, word) {
+  const newArrayOfSongs = new Set();
+
+  songs.forEach((song) => {
+    if (song.title.includes(word)) {
+      newArrayOfSongs.add(song.title);
+    }
+  });
+
+  return Array.from(newArrayOfSongs);
+  
+}
 
 // #10
 /**
