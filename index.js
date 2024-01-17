@@ -148,12 +148,12 @@ function getSongsWithDurationInMinutes(songs) {
  */
 function getAlbumsInReverseOrder(songs) {
 
-  const allAlbumsNoRepeats = new Set();
+  const allAlbumsNoRepeats = new Set(); //creates an object and eliminates duplicates if already within 
 
   songs.forEach(songAlbums => {
     allAlbumsNoRepeats.add(songAlbums.album);
   });
-
+// converts the new Set into an array and sorts it in reverse order via sort. 
   return Array.from(allAlbumsNoRepeats).sort((firstAlbum, lastAlbum) => lastAlbum.localeCompare(firstAlbum))
 }
 // #9
@@ -172,8 +172,8 @@ function songsWithWord(songs, word) {
     }
   });
 
-  return Array.from(newArrayOfSongs);
-  
+  return Array.from(newArrayOfSongs); // returns it as an array than an object 
+
 }
 
 // #10
@@ -183,14 +183,25 @@ function songsWithWord(songs, word) {
  * @param {string} artistName - Name of the artist.
  * @returns {number} Total runtime in seconds.
  */
-function getTotalRuntimeOfArtist(songs, artistName) {}
+function getTotalRuntimeOfArtist(songs, artistName) {
+  let totalRuntime = 0;
+songs.forEach(element => {
+  if(element.artist === artistName) {
+    totalRuntime += element.runtimeInSeconds
+  }
+})
+  return totalRuntime;
+}
 
 // Problem #11
 /**
  * Prints artists who have more than one song in the list.
  * @param {Object[]} songs - An array of songs.
  */
-function printArtistsWithMultipleSongs(songs) {}
+function printArtistsWithMultipleSongs(songs) {
+ 
+  
+}
 
 // Problem #12
 /**
