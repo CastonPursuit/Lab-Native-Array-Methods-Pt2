@@ -43,27 +43,23 @@ const exampleSongData = require("./data/songs");
  
 
 //   console.log(getSongsWithDurationInMinutes(exampleSongData))
-// Problem #14
+// Problem #13
 /**
- * Lists albums along with their total runtime.
+ * Sorts songs by artist name, then by song title alphabetically.
  * @param {Object[]} songs - An array of songs.
- * @returns {Object} An object mapping each album to its total runtime.
+ * @returns {Object[]} Sorted array of songs.
  */
-function listAlbumTotalRuntimes(songs) {
-    let albumAndRuntime = {};
-    for(let i = 0; i < songs.length; i++) {
-        let albumName = songs[i].album;
-        let runtimeInSeconds = songs[i].runtimeInSeconds;
-      if(!albumAndRuntime[albumName.album]) {
-        albumAndRuntime[albumName.album] = runtimeInSeconds;
-      } else {
-        albumAndRuntime[albumName.album] += runtimeInSeconds
-      }
+function sortSongsByArtistAndTitle(songs) {
+    // let sortedArtistAndTitle = [];
+return songs.sort((artistA,artistB) => { let listOfArtists = artistA.artist.toLowerCase().localeCompare(artistB.artist.toLowerCase())
+    if(listOfArtists !== 0){
+        return listOfArtists;
     }
-    return albumAndRuntime;
-    }
+   return artistA.title.localeCompare(artistB.title)
+})
+}
   
 
 
-console.log(listAlbumTotalRuntimes(exampleSongData))
+console.log(sortSongsByArtistAndTitle(exampleSongData))
 

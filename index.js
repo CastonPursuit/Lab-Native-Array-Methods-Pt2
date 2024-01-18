@@ -244,10 +244,12 @@ function printLongestSongTitle(songs) {
  * @returns {Object[]} Sorted array of songs.
  */
 function sortSongsByArtistAndTitle(songs) {
-    songs.sort((a, b) => { const artistListing = a.artist.localeCompare(b.artist);
-
-    return artistListing === 0 ? a.title.localeCompare(b.title) : artistListing;
-  });
+return songs.sort((artistA,artistB) => { let listOfArtists = artistA.artist.toLowerCase().localeCompare(artistB.artist.toLowerCase())
+  if(listOfArtists !== 0){
+      return listOfArtists;
+  }
+ return artistA.title.localeCompare(artistB.title)
+})
 }
 
 // Problem #14
@@ -278,10 +280,8 @@ function listAlbumTotalRuntimes(songs) {
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
 function findFirstSongStartingWith(songs, letter) {
-  return songs.find(song => song.title[0] === letter )
+  return songs.find(song => { song.title[0] === letter } || null )
   
-
-  return null
 }
 
 // Problem #16
