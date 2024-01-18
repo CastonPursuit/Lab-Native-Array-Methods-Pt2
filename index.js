@@ -199,16 +199,43 @@ songs.forEach(element => {
  * @param {Object[]} songs - An array of songs.
  */
 function printArtistsWithMultipleSongs(songs) {
- 
-  
+  let songCount = {};
+
+  songs.forEach(song => {
+    const artist = song.artist;
+
+    if (songCount[artist]) {
+      songCount[artist]++;
+    } else {
+      songCount[artist] = 1;
+    }
+  });
+
+  for (const artist in songCount) {
+    if (songCount[artist] > 1) {
+      console.log(`${artist}`);
+    }
+  }
 }
+  
+
 
 // Problem #12
 /**
  * Logs the longest song title.
  * @param {Object[]} songs - An array of songs.
  */
-function printLongestSongTitle(songs) {}
+function printLongestSongTitle(songs) {
+  let songTitleList = songs.map(song => {
+    return song.title; 
+  });
+
+  const longestTitle = songTitleList.reduce((longestSong, currentSong) => {
+    return currentSong.length > longestSong.length ? currentSong : longestSong;
+  });
+
+  console.log(longestTitle);
+}
 
 // Problem #13
 /**
