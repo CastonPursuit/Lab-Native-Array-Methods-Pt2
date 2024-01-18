@@ -256,7 +256,19 @@ function sortSongsByArtistAndTitle(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {Object} An object mapping each album to its total runtime.
  */
-function listAlbumTotalRuntimes(songs) {}
+function listAlbumTotalRuntimes(songs) {
+  let albumAndRuntime = {};
+  for(let i = 0; i < songs.length; i++) {
+      let albumName = songs[i].album;
+      let runtimeInSeconds = songs[i].runtimeInSeconds;
+    if(!albumAndRuntime[albumName]) {
+      albumAndRuntime[albumName] = runtimeInSeconds;
+    } else {
+      albumAndRuntime[albumName] += runtimeInSeconds
+    }
+  }
+  return albumAndRuntime;
+  }
 
 // Problem #15
 /**
