@@ -44,19 +44,14 @@ const exampleSongData = require("./data/songs");
 
 //   console.log(getSongsWithDurationInMinutes(exampleSongData))
 
-function printLongestSongTitle(songs) {
-    let songTitleList = songs.map(song => {
-      return song.title; 
-    });
-  
-    const longestTitle = songTitleList.reduce((longestSong, currentSong) => {
-      return currentSong.length > longestSong.length ? currentSong : longestSong;
-    });
-  
-    console.log(longestTitle);
-  }
+function sortSongsByArtistAndTitle(songs) {
+    let songArtists =songs.sort((a,b) => { return a.artist.localeCompare(b.artist)
+      })
+    let organizeByTitle = songArtists.sort((a,b) => { return a.title.localeCompare(b.title) } )
+    return organizeByTitle; 
+    }
   
 
 
-console.log(printLongestSongTitle(exampleSongData))
+console.log(sortSongsByArtistAndTitle(exampleSongData))
 
