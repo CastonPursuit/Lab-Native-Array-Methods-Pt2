@@ -49,17 +49,41 @@ const exampleSongData = require("./data/songs");
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Sorted array of songs.
  */
-function sortSongsByArtistAndTitle(songs) {
-    // let sortedArtistAndTitle = [];
-return songs.sort((artistA,artistB) => { let listOfArtists = artistA.artist.toLowerCase().localeCompare(artistB.artist.toLowerCase())
-    if(listOfArtists !== 0){
-        return listOfArtists;
-    }
-   return artistA.title.localeCompare(artistB.title)
-})
-}
+function findAlbumWithLongestAverageRuntime(songs) {
+   let albumAndRuntimes = {};
   
+  songs.forEach(song => {
+    let specificAlbum = song.album;
+    let runtime = song.runtimeInSeconds 
+
+        if(!albumAndRuntimes[specificAlbum]) {
+            albumAndRuntimes[specificAlbum] = { 
+            totalRuntime : runtime,
+            numberOfSongs :1 }
+
+        } else {
+            albumAndRuntimes[specificAlbum].totalRuntime += runtime
+            albumAndRuntimes[specificAlbum].numberOfSongs ++;
+        }
+
+  });
+  let longestRuntime = 0;
+  let albumWithLongestRuntime = undefined; 
+  for(const album in albumAndRuntimes) {
+    let sumRunTime = albumAndRuntimes[album].totalRuntime;
+    let totalSongs = albumAndRuntimes[album].numberOfSongs;
+    let averageRuntime = sumRunTime / totalSongs;
+    if(averageRuntime > longestRuntime) {
+        longestRuntime = averageRuntime;
+        albumWithLongestRuntime = album;
+    }
+  }
+  
+return albumWithLongestRuntime;
 
 
-console.log(sortSongsByArtistAndTitle(exampleSongData))
+  }
+
+
+console.log(findAlbumWithLongestAverageRuntime(exampleSongData))
 

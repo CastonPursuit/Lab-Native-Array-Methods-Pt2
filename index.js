@@ -280,7 +280,7 @@ function listAlbumTotalRuntimes(songs) {
  * @returns {Object|null} The first song object that matches the criterion or null.
  */
 function findFirstSongStartingWith(songs, letter) {
-  return songs.find(song => { song.title[0] === letter } || null )
+  return songs.find(song => song.title[0] === letter || null )
   
 }
 
@@ -311,7 +311,40 @@ function mapArtistsToSongs(songs) {
  * @param {Object[]} songs - An array of songs.
  * @returns {string} The name of the album with the longest average song runtime.
  */
-function findAlbumWithLongestAverageRuntime(songs) {}
+function findAlbumWithLongestAverageRuntime(songs) {
+  let albumAndRuntimes = {};
+ 
+ songs.forEach(song => {
+   let specificAlbum = song.album;
+   let runtime = song.runtimeInSeconds 
+
+       if(!albumAndRuntimes[specificAlbum]) {
+           albumAndRuntimes[specificAlbum] = { 
+           totalRuntime : runtime,
+           numberOfSongs :1 }
+
+       } else {
+           albumAndRuntimes[specificAlbum].totalRuntime += runtime
+           albumAndRuntimes[specificAlbum].numberOfSongs ++;
+       }
+
+ });
+ let longestRuntime = 0;
+ let albumWithLongestRuntime = undefined; 
+ for(const album in albumAndRuntimes) {
+   let sumRunTime = albumAndRuntimes[album].totalRuntime;
+   let totalSongs = albumAndRuntimes[album].numberOfSongs;
+   let averageRuntime = sumRunTime / totalSongs;
+   if(averageRuntime > longestRuntime) {
+       longestRuntime = averageRuntime;
+       albumWithLongestRuntime = album;
+   }
+ }
+ 
+return albumWithLongestRuntime;
+
+
+ }
 
 // Problem #18
 /**
