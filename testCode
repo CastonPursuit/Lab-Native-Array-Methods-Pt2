@@ -1,0 +1,73 @@
+const exampleSongData = require("./data/songs");
+
+// function categorizeSongsByRuntime(songs) {
+//     return songs.reduce((categorizedSongs, currSong) => {
+//       if (currSong.runtimeInSeconds < 180) {
+//         categorizedSongs.short++;
+//       } else if (
+//         currSong.runtimeInSeconds >= 180 &&
+//         currSong.runtimeInSeconds <= 300
+//       ) {
+//         categorizedSongs.medium++;
+//       } else if (
+//         currSong.runtimeInSeconds > 300) {
+//           categorizedSongs.long++;
+//         }
+//         return categorizedSongs;
+//     }, {short: 0, medium: 0, long: 0 });
+//   }
+//   console.log("categorize by runtime", categorizeSongsByRuntime(exampleSongData));
+
+
+// console.log(categorizeSongsByRuntime(exampleSongData))
+
+// function getFirstSongInAlbum(songs, albumName) {
+//     let newAlbumListing = [];
+
+//     let songsByAlbum = songs.filter((song) => song.album === albumName);
+
+//     newAlbumListing = songsByAlbum.sort((a, b) => a.title.localeCompare(b.title));
+
+//     return newAlbumListing[0];
+// }
+// console.log(getFirstSongInAlbum(exampleSongData,"Bluewerks Vol. 1: Up Down Left Right"))  
+
+// function getSongsWithDurationInMinutes(songs) { 
+
+//     songs.forEach((song) => 
+//       song['durationInMinutes'] = song.runtimeInSeconds / 60
+//     ) 
+ 
+//     return songs;
+//  }
+ 
+
+//   console.log(getSongsWithDurationInMinutes(exampleSongData))
+// Problem #13
+/**
+ * Sorts songs by artist name, then by song title alphabetically.
+ * @param {Object[]} songs - An array of songs.
+ * @returns {Object[]} Sorted array of songs.
+ */
+function findArtistWithMostSongs(songs) { 
+    let artisAndNumberOFSongs = {};
+    let artistWithMostSongs = ''
+    let totalNumberOfSongs = 0;
+    songs.forEach((album) => {
+        if(!artisAndNumberOFSongs[album.artist]) {
+        artisAndNumberOFSongs[album.artist] = { numberOfSongs : 1 } 
+        } else {
+        artisAndNumberOFSongs[album.artist].numberOfSongs++
+        }
+        if(artisAndNumberOFSongs[album.artist].numberOfSongs > totalNumberOfSongs) {
+            totalNumberOfSongs = artisAndNumberOFSongs[album.artist].artisAndNumberOFSongs;
+            artistWithMostSongs = album.artist;
+        }
+    })
+
+    return artistWithMostSongs;
+}
+
+
+console.log(findArtistWithMostSongs(exampleSongData))
+
