@@ -49,41 +49,25 @@ const exampleSongData = require("./data/songs");
  * @param {Object[]} songs - An array of songs.
  * @returns {Object[]} Sorted array of songs.
  */
-function findAlbumWithLongestAverageRuntime(songs) {
-   let albumAndRuntimes = {};
-  
-  songs.forEach(song => {
-    let specificAlbum = song.album;
-    let runtime = song.runtimeInSeconds 
-
-        if(!albumAndRuntimes[specificAlbum]) {
-            albumAndRuntimes[specificAlbum] = { 
-            totalRuntime : runtime,
-            numberOfSongs :1 }
-
+function findArtistWithMostSongs(songs) { 
+    let artisAndNumberOFSongs = {};
+    let artistWithMostSongs = ''
+    let totalNumberOfSongs = 0;
+    songs.forEach((album) => {
+        if(!artisAndNumberOFSongs[album.artist]) {
+        artisAndNumberOFSongs[album.artist] = { numberOfSongs : 1 } 
         } else {
-            albumAndRuntimes[specificAlbum].totalRuntime += runtime
-            albumAndRuntimes[specificAlbum].numberOfSongs ++;
+        artisAndNumberOFSongs[album.artist].numberOfSongs++
         }
+        if(artisAndNumberOFSongs[album.artist].numberOfSongs > totalNumberOfSongs) {
+            totalNumberOfSongs = artisAndNumberOFSongs[album.artist].artisAndNumberOFSongs;
+            artistWithMostSongs = album.artist;
+        }
+    })
 
-  });
-  let longestRuntime = 0;
-  let albumWithLongestRuntime = undefined; 
-  for(const album in albumAndRuntimes) {
-    let sumRunTime = albumAndRuntimes[album].totalRuntime;
-    let totalSongs = albumAndRuntimes[album].numberOfSongs;
-    let averageRuntime = sumRunTime / totalSongs;
-    if(averageRuntime > longestRuntime) {
-        longestRuntime = averageRuntime;
-        albumWithLongestRuntime = album;
-    }
-  }
-  
-return albumWithLongestRuntime;
+    return artistWithMostSongs;
+}
 
 
-  }
-
-
-console.log(findAlbumWithLongestAverageRuntime(exampleSongData))
+console.log(findArtistWithMostSongs(exampleSongData))
 
