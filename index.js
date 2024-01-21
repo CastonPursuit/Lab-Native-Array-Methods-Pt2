@@ -117,8 +117,7 @@ function getAlbumsInReverseOrder(songs) {
       return 1
     }
   });
-  return albumArray.filter((album, 
-    index) => albumArray.indexOf(album) === index)
+  return albumArray.filter((album, index) => albumArray.indexOf(album) === index)
 }
 
 // #9
@@ -211,8 +210,6 @@ function sortSongsByArtistAndTitle(songs) {
   })
 }
 
-
-
 // Problem #14
 /**
  * Lists albums along with their total runtime.
@@ -237,7 +234,6 @@ function findFirstSongStartingWith(songs, letter) {
   return songs.find(song => song.title[0] === letter) || null;
 }
 
-
 // Problem #16
 /**
  * Maps each artist to an array of their song titles.
@@ -258,7 +254,6 @@ function mapArtistsToSongs(songs) {
     return object
   },{})
 }
-
 
 // Problem #17
 /**
@@ -392,7 +387,6 @@ function findArtistWithMostSongs(songs) {
   // }
   // return artistWithMost
 }
-
 
 module.exports = {
   getSortedTitles,
