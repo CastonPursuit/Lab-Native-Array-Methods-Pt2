@@ -137,7 +137,7 @@ const songs = [
     album: "Seasonal Sounds",
     artist: "Melody Green",
     runtimeInSeconds: 152,
-  }
+  },
 ];
 
 module.exports = songs;
