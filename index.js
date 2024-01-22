@@ -244,16 +244,12 @@ function findFirstSongStartingWith(songs, letter) {
 
 function mapArtistsToSongs(songs) {
   // * MY CODE 
-  let mappedObject = songs.reduce((object, song) => {
+  return songs.reduce((object, song) => {
     let arr = []
     arr.push(song.title)
-    object[song.artist] = (object[song.artist] || arr).concat(arr)
+    object[song.artist] = (object[song.artist] || []).concat(arr)
     return object
   },{})
-  for(const key in mappedObject) {
-    mappedObject[key] = mappedObject[key].filter((songs, i) => mappedObject[key].indexOf(songs) === i)
-  }
-  return mappedObject
 }
 
 console.log(mapArtistsToSongs(exampleSongData))
