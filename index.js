@@ -3,6 +3,7 @@ Native Array Methods pt.2 continues with the same dataset: songs. All required f
 */
 
 
+const { ECDH } = require("crypto");
 const exampleSongData = require("./data/songs");
 // Do not change the line above.
 
@@ -243,17 +244,19 @@ function findFirstSongStartingWith(songs, letter) {
 
 function mapArtistsToSongs(songs) {
   // * MY CODE 
-  return songs.reduce((object, song) => {
+  let mappedObject = songs.reduce((object, song) => {
     let arr = []
-    for(const songs2 of songs){
-      if(song.artist === songs2.artist){
-        arr.push(songs2.title)
-      }
-    }
-    object[song.artist] = (object[song.artist] || arr)
+    arr.push(song.title)
+    object[song.artist] = (object[song.artist] || arr).concat(arr)
     return object
   },{})
+  for(const key in mappedObject) {
+    mappedObject[key] = mappedObject[key].filter((songs, i) => mappedObject[key].indexOf(songs) === i)
+  }
+  return mappedObject
 }
+
+console.log(mapArtistsToSongs(exampleSongData))
 
 // Problem #17
 /**
@@ -303,48 +306,41 @@ function printSongsSortedByRuntime(songs) {
  */
 function printAlbumSummaries(songs) {
   // * CLASSCODE
-  let albumSummaries = {};
-  songs.forEach(song => {
-    if(!albumSummaries[song.album]){
-      albumSummaries[song.album] = {
-        albumName: song.album,
-        songCount: 1,
-        totalRuntime: song.runtimeInSeconds
-        }
-    }else {
-      albumSummaries[song.album].songCount++;
-      albumSummaries[song.album].totalRuntime += song.runtimeInSeconds;
-    }
-  })
-  for(const summary in albumSummaries) {
-    console.log(`${albumSummaries[summary].albumName}: ${albumSummaries[summary].songCount} songs, Total Runtime: ${albumSummaries[summary].totalRuntime} seconds`)
-    //                                             To account for the s in a plural value       ^ ${albumSummaries[summary].songCount > 1 ? "s" : ""}
-  }
+  // let albumSummaries = {};
+  // songs.forEach(song => {
+  //   if(!albumSummaries[song.album]){
+  //     albumSummaries[song.album] = {
+  //       albumName: song.album,
+  //       songCount: 1,
+  //       totalRuntime: song.runtimeInSeconds
+  //       }
+  //   }else {
+  //     albumSummaries[song.album].songCount++;
+  //     albumSummaries[song.album].totalRuntime += song.runtimeInSeconds;
+  //   }
+  // })
+  // for(const summary in albumSummaries) {
+  //   console.log(`${albumSummaries[summary].albumName}: ${albumSummaries[summary].songCount} songs, Total Runtime: ${albumSummaries[summary].totalRuntime} seconds`)
+  //   //                                             To account for the s in a plural value       ^ ${albumSummaries[summary].songCount > 1 ? "s" : ""}
+  // }
 
   // * MYCODE
-  // const albums = songs.map(song => song.album)
-  // let albumWithRuntimeObject = {};
-  // for(const album of albums) {
-  //   const arr = []
-  //   for(const song of songs) {
-  //     if(album === song.album) {
-  //       arr.push(song.runtimeInSeconds)
-  //     }
-  //   }
-  //   if(albumWithRuntimeObject.hasOwnProperty(album)){
-  //     continue;
-  //   }
-  //   albumWithRuntimeObject[album] = arr
-  // }
-  // for(const album in albumWithRuntimeObject){
-  //   let songtotal = 0
-  //   let totalRuntime = 0
-  //   for(const time of albumWithRuntimeObject[album]) {
-  //     totalRuntime += time
-  //     songtotal++
-  //   }
-  //   console.log(`${album}: ${songtotal} songs, Total Runtime: ${totalRuntime} seconds`)
-  // }
+  let object = songs.reduce((obj, song) =>  {
+    if(!obj[song.album]) {
+      obj[song.album] = {
+        albumName : song.album,
+        songCount : 1,
+        totalRuntime : song.runtimeInSeconds
+      }
+    }else {
+      obj[song.album].songCount++
+      obj[song.album].totalRuntime += song.runtimeInSeconds
+    }
+    return obj
+  },{})
+  for(const album in object){
+    console.log(`${object[album].albumName}: ${object[album].songCount} songs, Total Runtime: ${object[album].totalRuntime} seconds`)
+  }
 }
 
 // Problem #20
