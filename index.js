@@ -252,8 +252,6 @@ function mapArtistsToSongs(songs) {
   },{})
 }
 
-console.log(mapArtistsToSongs(exampleSongData))
-
 // Problem #17
 /**
  * Finds the album with the longest average song runtime.
